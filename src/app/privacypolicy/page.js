@@ -41,7 +41,7 @@ function PrivacyPolicy(
             <strong>Security:</strong> We take reasonable measures to protect your personal information, but cannot guarantee absolute security.
           </p>
           <p style={{ marginBottom: '20px' }}>
-            <strong>Children's Privacy:</strong> Our services are not intended for children under the age of 13.
+            <strong>Children&apos;s Privacy:</strong> Our services are not intended for children under the age of 13.
           </p>
           <p style={{ marginBottom: '20px' }}>
             <strong>Changes to this Policy:</strong> We may update this Privacy Policy from time to time. Any changes will be posted on this page.

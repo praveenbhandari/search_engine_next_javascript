@@ -1,6 +1,6 @@
 "use client";
 import "./styles.css";
-import React, { useState, useEffect,useContext, useCallback, useRef, Link } from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef, Link } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 import Highlighter from "react-highlight-words";
@@ -23,169 +23,168 @@ import Image from 'next/image'
 
 // import DesktopViewPrompt from './Desktopprompt';
 function Search_content(//{
-// //   searchPerformed,
-//   setSelectedYear,
-//   setSelectedCourt,
-//   setSelectedMonth,
-//   setSelectedDocumentType,
-//   setSelectedJudge,
-//   setSelectedParty,
-//   setSelectedKeyword, 
-//   sortDirection,
-//   toggleAccordion,
-//   openAccordion,
-//   toggleSortDirection,
-//   isLoggedIn,
-//   results,
-//   searchQuery,
-//   handleKeyDown,
-//   handleSearch,
-//   loading,
-//   showSuggestions,
-//   modalShow,
-//   setShowSuggestions,
-//   suggestions,
-//   setSearchQuery,
-//   // ClipLoader,
-//   selectedParty,
-//   uniqueParties,
-//   uniqueCourts,
-//   uniqueDocumentTypes,
-//   uniqueJudges,
-//   uniqueKeywords,
-//   uniqueMonths,
-//   uniqueYears,
-//   selectedJudge,
-//   selectedDocumentType,
-//   selectedKeyword,
-//   selectedMonth,
-//   selectedCourt,
-//   selectedYear,
-//   // LoginModal,
-//   login,
-//   sortByDate,
-//   toggleSortMode,
-//   sortByCaseName,
-//   toggleSortByCaseName,
-//   groupedResults,
-//   ResultCard,
-//   keywo 
-// }
-)
-{
-//   const [results, setResults] = useState(null);
-
-//   const [isLoggedIn, setIsLoggedIn] = useState(true);
-// // v
-// const [searchQuery, setSearchQuery] = useState(null);
-
-function formatDate(dateString) {
-  if (!dateString || isNaN(Date.parse(dateString))) {
-    return dateString;
-  }
-
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-
-  return `${day}-${month}-${year}`;
-}
-
-
-// const [keywo, setkeywo] = useState(null);
-function ResultCard({ item, searchWords, scores, sortByCaseName }) {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [is1ModalOpen, set1ModalOpen] = useState(false);
-  const [data, setData] = useState("");
-  // const [words, setData] = useState("");
-  // console.log(item)
-
-  const { metadata } = item[1];
-  // console.log(metadata)
-  const { page_content } = item[1];
-  // console.log(metadata)
-  const score = item[0];
-  // console.log("Score:", score);
-  const [selectedReference, setSelectedReference] = useState('');
-  // console.log("**********");
-  // console.log(metadata);
-  const partiesInvolved = Array.isArray(metadata["Parties Involved"])
-    ? metadata["Parties Involved"].join(" vs. ")
-    : metadata["Parties Involved"];
-  // console.log(searchWords)
-
-  const handleChange = (event) => {
-
-    const url = event.target.value;
-    const get = backend_url + `/get_index/${url}`
-    // const get = `https://search-engine.lawyantra.com/get_index/${url}`
-
-
-    // console.log(url)
-    // console.log(get)
-    // useEffect(() => {
-    // Replace 'your-api-url' with the actual API URL you want to call
-    axios.get(get)
-      .then((response) => {
-        setData(response.data);
-        set1ModalOpen(true)
-        // console.log(response.data)
-      })
-    // .catch((error) => {
-    // setError(error); // Handle error
-    // })
-    // .finally(() => {
-    // setLoading(false); // Always executed
-    // });
-    // }, []); 
-
-    // setSelectedReference(url);
-    // if (url) {
-    // // Open the selected reference in a new tab
-    // window.open(url, '_blank', 'noopener,noreferrer');
-    // }
-  };
-
-
-  // function highlightText(text, wordsToHighlight) {
-  // const regex = new RegExp(`\\b(${wordsToHighlight.join('|')})\\b`, 'gi');
-  // const parts = text.split(regex);
-
-  // return parts.map((part, i) => 
-  // wordsToHighlight.includes(part.toLowerCase()) ? 
-  // <span key={i} style={{ backgroundColor: 'yellow' }}>{part}</span> : 
-  // part
-  // );
+  // //   searchPerformed,
+  //   setSelectedYear,
+  //   setSelectedCourt,
+  //   setSelectedMonth,
+  //   setSelectedDocumentType,
+  //   setSelectedJudge,
+  //   setSelectedParty,
+  //   setSelectedKeyword, 
+  //   sortDirection,
+  //   toggleAccordion,
+  //   openAccordion,
+  //   toggleSortDirection,
+  //   isLoggedIn,
+  //   results,
+  //   searchQuery,
+  //   handleKeyDown,
+  //   handleSearch,
+  //   loading,
+  //   showSuggestions,
+  //   modalShow,
+  //   setShowSuggestions,
+  //   suggestions,
+  //   setSearchQuery,
+  //   // ClipLoader,
+  //   selectedParty,
+  //   uniqueParties,
+  //   uniqueCourts,
+  //   uniqueDocumentTypes,
+  //   uniqueJudges,
+  //   uniqueKeywords,
+  //   uniqueMonths,
+  //   uniqueYears,
+  //   selectedJudge,
+  //   selectedDocumentType,
+  //   selectedKeyword,
+  //   selectedMonth,
+  //   selectedCourt,
+  //   selectedYear,
+  //   // LoginModal,
+  //   login,
+  //   sortByDate,
+  //   toggleSortMode,
+  //   sortByCaseName,
+  //   toggleSortByCaseName,
+  //   groupedResults,
+  //   ResultCard,
+  //   keywo 
   // }
-  // console.log(score)
-  // console.log(searchWords)
-  // const searchRegex = new RegExp("\\b(" + searchWords.join("|") + ")\\b", "gi");
-  const searchRegexes = searchWords.map(word => new RegExp(`\\b${word}\\b`, "gi"));
-  // console.log(searchRegexes)
-  const [firstword, ...others] = searchRegexes;
-  // Check if both case summary and document summary are "Not found"
-  if (metadata["Case Summary"] === "Not found" && metadata["Document Summary"] === "Not found") {
-    return null; // Don't render the card
+) {
+  //   const [results, setResults] = useState(null);
+
+  //   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // // v
+  // const [searchQuery, setSearchQuery] = useState(null);
+
+  function formatDate(dateString) {
+    if (!dateString || isNaN(Date.parse(dateString))) {
+      return dateString;
+    }
+
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
   }
 
 
-  return (
-    <div className="result-card">
-      {sortByCaseName ? (
-        <>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
-            <strong><h3 style={{ margin: 0 }}>{metadata["Case Name"]}</h3></strong>
-            {
-              metadata["Date"] && metadata["Date"].trim() !== "" && ( // Check if Date is not empty or null
-                <p>
-                  <strong>Date:</strong> {formatDate(metadata["Date"])}
-                </p>
-              )
-            }
-          </div>
+  // const [keywo, setkeywo] = useState(null);
+  function ResultCard({ item, searchWords, scores, sortByCaseName }) {
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [is1ModalOpen, set1ModalOpen] = useState(false);
+    const [data, setData] = useState("");
+    // const [words, setData] = useState("");
+    // console.log(item)
 
-          {/* {
+    const { metadata } = item[1];
+    // console.log(metadata)
+    const { page_content } = item[1];
+    // console.log(metadata)
+    const score = item[0];
+    // console.log("Score:", score);
+    const [selectedReference, setSelectedReference] = useState('');
+    // console.log("**********");
+    // console.log(metadata);
+    const partiesInvolved = Array.isArray(metadata["Parties Involved"])
+      ? metadata["Parties Involved"].join(" vs. ")
+      : metadata["Parties Involved"];
+    // console.log(searchWords)
+
+    const handleChange = (event) => {
+
+      const url = event.target.value;
+      const get = backend_url + `/get_index/${url}`
+      // const get = `https://search-engine.lawyantra.com/get_index/${url}`
+
+
+      // console.log(url)
+      // console.log(get)
+      // useEffect(() => {
+      // Replace 'your-api-url' with the actual API URL you want to call
+      axios.get(get)
+        .then((response) => {
+          setData(response.data);
+          set1ModalOpen(true)
+          // console.log(response.data)
+        })
+      // .catch((error) => {
+      // setError(error); // Handle error
+      // })
+      // .finally(() => {
+      // setLoading(false); // Always executed
+      // });
+      // }, []); 
+
+      // setSelectedReference(url);
+      // if (url) {
+      // // Open the selected reference in a new tab
+      // window.open(url, '_blank', 'noopener,noreferrer');
+      // }
+    };
+
+
+    // function highlightText(text, wordsToHighlight) {
+    // const regex = new RegExp(`\\b(${wordsToHighlight.join('|')})\\b`, 'gi');
+    // const parts = text.split(regex);
+
+    // return parts.map((part, i) => 
+    // wordsToHighlight.includes(part.toLowerCase()) ? 
+    // <span key={i} style={{ backgroundColor: 'yellow' }}>{part}</span> : 
+    // part
+    // );
+    // }
+    // console.log(score)
+    // console.log(searchWords)
+    // const searchRegex = new RegExp("\\b(" + searchWords.join("|") + ")\\b", "gi");
+    const searchRegexes = searchWords.map(word => new RegExp(`\\b${word}\\b`, "gi"));
+    // console.log(searchRegexes)
+    const [firstword, ...others] = searchRegexes;
+    // Check if both case summary and document summary are "Not found"
+    if (metadata["Case Summary"] === "Not found" && metadata["Document Summary"] === "Not found") {
+      return null; // Don't render the card
+    }
+
+
+    return (
+      <div className="result-card">
+        {sortByCaseName ? (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+              <strong><h3 style={{ margin: 0 }}>{metadata["Case Name"]}</h3></strong>
+              {
+                metadata["Date"] && metadata["Date"].trim() !== "" && ( // Check if Date is not empty or null
+                  <p>
+                    <strong>Date:</strong> {formatDate(metadata["Date"])}
+                  </p>
+                )
+              }
+            </div>
+
+            {/* {
  (!metadata["Date"] || metadata["Date"].trim() === "") ? ( // Check if Date is null or empty
  <p>
  <strong>Date:</strong> {formatDate(metadata["Document Date"])}
@@ -196,27 +195,29 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
  </p>
  )
  } */}
-          {metadata["Parties Involved"] &&
-            metadata["Parties Involved"].map((keyword, index) => (
-              keyword === "" ? <p>
-                <div className="result-content"><strong>Parties Involved:</strong> {keyword}</div>
-              </p> : <></>
-            ))}
+            {metadata["Parties Involved"] &&
+              metadata["Parties Involved"].map((keyword) => (
+                keyword === "" ? (
+                  <p key={keyword.id}>
+                    <div className="result-content"><strong>Parties Involved:</strong> {keyword.name}</div>
+                  </p>
+                ) : null
+              ))}
 
-          {
-            metadata["CourtName"] === "" ? <></> :
-              <p>
-                <strong>Court:</strong> {metadata["Court Name"]}
-              </p>
-          }
+            {
+              metadata["CourtName"] === "" ? <></> :
+                <p>
+                  <strong>Court:</strong> {metadata["Court Name"]}
+                </p>
+            }
 
-          {/* {metadata["Document Type"] &&
+            {/* {metadata["Document Type"] &&
  metadata["Document Type"].map((keyword, index) => (
  keyword === "" ? <p>
  <strong>Document Type:</strong> {keyword}
  </p> : <></>
  ))} */}
-          {/* {
+            {/* {
  metadata["Case Summary"] === "Not found" ? (
  <div>
  <Highlighter
@@ -233,53 +234,53 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
  />
  )
  } */}
-          {
-            ["Not found", "Not mentioned", "Not provided"].includes(metadata["Case Summary"]) ? (
-              <div>
+            {
+              ["Not found", "Not mentioned", "Not provided"].includes(metadata["Case Summary"]) ? (
+                <div>
+                  <Highlighter
+                    highlightClassName="highlighted-text"
+                    searchWords={searchRegexes}
+                    textToHighlight={String(metadata["Document Summary"])}
+                  />
+                </div>
+              ) : (
                 <Highlighter
                   highlightClassName="highlighted-text"
                   searchWords={searchRegexes}
-                  textToHighlight={String(metadata["Document Summary"])}
+                  textToHighlight={String(metadata["Case Summary"])}
                 />
+              )
+            }
+            <br />
+            {metadata["case_url"] && (
+              <div style={{ display: 'flex' }}>
+                <a href={metadata["case_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
+                  <button style={{ width: '100%', textAlign: 'left' }}>
+                    <strong>Case URL: {metadata["case_url"].substring(0, 100)}</strong>
+                  </button>
+                </a>
               </div>
-            ) : (
-              <Highlighter
-                highlightClassName="highlighted-text"
-                searchWords={searchRegexes}
-                textToHighlight={String(metadata["Case Summary"])}
-              />
-            )
-          }
-          <br />
-          {metadata["case_url"] && (
-            <div style={{ display: 'flex' }}>
-              <a href={metadata["case_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
-                <button style={{ width: '100%', textAlign: 'left' }}>
-                  <strong>Case URL: {metadata["case_url"].substring(0, 100)}</strong>
-                </button>
-              </a>
-            </div>
-          )}
-          {metadata["pdf_url"] && (
-            <div style={{ display: "inline-flex" }}>
-              <a href={metadata["pdf_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
-                <button style={{ width: '100%', textAlign: 'left' }}>
-                  <strong>Pdf URL: {metadata["pdf_url"].substring(0, 100)}</strong>
-                </button>
-              </a>
-            </div>
-          )}
-          {metadata["url"] && (
-            <div style={{ display: "inline-flex" }}>
-              <a href={metadata["url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
-                <button style={{ width: '100%', textAlign: 'left' }}>
-                  <strong>URL: {metadata["url"].substring(0, 100)}</strong>
-                </button>
-              </a>
-            </div>
-          )}
-          
-{/* 
+            )}
+            {metadata["pdf_url"] && (
+              <div style={{ display: "inline-flex" }}>
+                <a href={metadata["pdf_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
+                  <button style={{ width: '100%', textAlign: 'left' }}>
+                    <strong>Pdf URL: {metadata["pdf_url"].substring(0, 100)}</strong>
+                  </button>
+                </a>
+              </div>
+            )}
+            {metadata["url"] && (
+              <div style={{ display: "inline-flex" }}>
+                <a href={metadata["url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
+                  <button style={{ width: '100%', textAlign: 'left' }}>
+                    <strong>URL: {metadata["url"].substring(0, 100)}</strong>
+                  </button>
+                </a>
+              </div>
+            )}
+
+            {/* 
           {metadata.Keywords && Array.isArray(metadata.Keywords) && metadata.Keywords.length > 0 && (
             <div className="keywords-container">
               {metadata.Keywords.map((keyword, index) => (
@@ -299,19 +300,19 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
           <button onClick={() => setModalOpen(true)} className="view-document">
             View Summary
           </button> */}
-          {isModalOpen && (
-            <DocumentModal
-              content={
-                <>
-                  {{ 'page': page_content, 'meta': metadata }}
-                  {/* <Highlighter
+            {isModalOpen && (
+              <DocumentModal
+                content={
+                  <>
+                    {{ 'page': page_content, 'meta': metadata }}
+                    {/* <Highlighter
                     highlightClassName="highlighted-text"
                     searchWords={searchRegexes}
                     // autoEscape={true}
                     textToHighlight={page_content + "\n\nDocument Type: " + metadata["Document Type"] + "\n\nJudges Involved: " + metadata["Judges"] + "\n\nKeywords: " + metadata["keywords"] + "\n\nPDF URL: " + metadata["pdf_url"] + "\n\nCase URL: " + metadata["case_url"]}
                   // textToHighlight={Object.entries(metadata).map(([key, value]) => `${key}: ${value}`).join('\n\n')}
                   /> */}
-                  {/* <div>
+                    {/* <div>
                     {metadata.reference && metadata.reference.length > 0 && (
                       <select onChange={handleChange} value={selectedReference}>
                         <option value="">Select a reference</option>
@@ -323,18 +324,18 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
                       </select>
                     )}
                   </div> */}
-                </>
-              }
-              onClose={() => setModalOpen(false)}
-            />
-          )}
-          {is1ModalOpen && (
+                  </>
+                }
+                onClose={() => setModalOpen(false)}
+              />
+            )}
+            {is1ModalOpen && (
 
-            <DocumentModal
-              content={
-                <>
-                  {data.context}
-                  {/* <br /><br />
+              <DocumentModal
+                content={
+                  <>
+                    {data.context}
+                    {/* <br /><br />
                   <a href={metadata["case_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}><button style={{ width: '100%', textAlign: 'left' }}><strong>Case URL: {metadata["case_url"].substring(0, 100)}</strong></button></a>
                   <br /><br />
 
@@ -344,166 +345,166 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
                   <a href={metadata["url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}><button style={{ width: '100%', textAlign: 'left' }}><strong>URL: {metadata["url"].substring(0, 100)}</strong></button></a>
                   <br /> */}
 
-                </>
+                  </>
+                }
+                onClose={() => set1ModalOpen(false)}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+              <h3 style={{ margin: 0 }}>{metadata["Case Name"]}</h3>
+              {/* <h4 style={{ margin: 0 }}>{score.includes("Relevant") ? "Relevant" : score + "%"}</h4> */}
+              {
+                metadata["Date"] && metadata["Date"].trim() !== "" && ( // Check if Date is not empty or null
+                  <h4 style={{ margin: 0, marginTop: 0, paddingBottom: '15px' }}>
+                    <center> <strong>Date:</strong> {formatDate(metadata["Date"])}</center>
+                  </h4>
+                )
               }
-              onClose={() => set1ModalOpen(false)}
-            />
-          )}
-        </>
-      ) : (
-        <>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
-            <h3 style={{ margin: 0 }}>{metadata["Case Name"]}</h3>
-            {/* <h4 style={{ margin: 0 }}>{score.includes("Relevant") ? "Relevant" : score + "%"}</h4> */}
+            </div>
+
             {
-              metadata["Date"] && metadata["Date"].trim() !== "" && ( // Check if Date is not empty or null
-                <h4 style={{ margin: 0, marginTop: 0, paddingBottom: '15px' }}>
-                  <center> <strong>Date:</strong> {formatDate(metadata["Date"])}</center>
-                </h4>
+
+              Array.isArray(metadata["Parties Involved"]) && metadata["Parties Involved"].length > 0 && (
+                <div className="result-content">
+                  <strong>Parties Involved:</strong> {metadata["Parties Involved"].filter(keyword => keyword.trim() !== "").join(", ")}
+                </div>
+
               )
+
             }
-          </div>
-
-          {
-
-            Array.isArray(metadata["Parties Involved"]) && metadata["Parties Involved"].length > 0 && (
-              <div className="result-content">
-                <strong>Parties Involved:</strong> {metadata["Parties Involved"].filter(keyword => keyword.trim() !== "").join(", ")}
-              </div>
-
-            )
-
-          }
 
 
-          {
+            {
 
-            metadata["CourtName"] === "" ? <></> :
-              <p>
-                <div className="result-content">   <strong>Court:</strong> {metadata["Court Name"]}</div>
-              </p>}
+              metadata["CourtName"] === "" ? <></> :
+                <p>
+                  <div className="result-content">   <strong>Court:</strong> {metadata["Court Name"]}</div>
+                </p>}
 
 
-          {/* {metadata["Document Type"] &&
+            {/* {metadata["Document Type"] &&
             metadata["Document Type"].map((keyword, index) => (
             keyword === "" ? <p>
             <strong>Document Type:</strong> {keyword}
             </p> : <></>
             ))} */
-          }
-          {
-            <div className="result-content">
-              <strong> Short Summary:</strong>
-              {["Not found", "Not mentioned", "Not provided"].includes(metadata["Case Summary"]) ? (
-                <div>
+            }
+            {
+              <div className="result-content">
+                <strong> Short Summary:</strong>
+                {["Not found", "Not mentioned", "Not provided"].includes(metadata["Case Summary"]) ? (
+                  <div>
+                    <Highlighter
+                      highlightClassName="highlighted-text"
+                      searchWords={searchRegexes}
+                      textToHighlight={String(metadata["Document Summary"])}
+                    />
+                  </div>
+                ) : (
                   <Highlighter
                     highlightClassName="highlighted-text"
                     searchWords={searchRegexes}
-                    textToHighlight={String(metadata["Document Summary"])}
+                    textToHighlight={String(metadata["Case Summary"])}
                   />
-                </div>
-              ) : (
-                <Highlighter
-                  highlightClassName="highlighted-text"
-                  searchWords={searchRegexes}
-                  textToHighlight={String(metadata["Case Summary"])}
-                />
-              )}</div>
-          }
-          {/* <br /> */}
-          {metadata["case_url"] && (
-            <div style={{ display: 'flex' }}>
-              <a href={metadata["case_url"]} target="_blank" style={{ background: "#ffff", color: "blue", textDecoration: "underline" }}>
+                )}</div>
+            }
+            {/* <br /> */}
+            {metadata["case_url"] && (
+              <div style={{ display: 'flex' }}>
+                <a href={metadata["case_url"]} target="_blank" style={{ background: "#ffff", color: "blue", textDecoration: "underline" }}>
+                  <button
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      userSelect: 'none', /* Prevent text selection */
+                      MozUserSelect: 'none',
+                      WebkitUserSelect: 'none',
+                      msUserSelect: 'none'
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default link behavior
+                      setModalOpen(true)// Call your custom function
+                    }}
+                  >
+                    <strong>Case URL: {metadata["case_url"].substring(0, 100)}</strong>
+                  </button>
+                </a>
+              </div>
+
+            )}
+            {metadata["pdf_url"] && (
+              <div style={{ display: "inline-flex" }}>
+                <a href={metadata["pdf_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
+                  <button
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      userSelect: 'none', /* Prevent text selection */
+                      MozUserSelect: 'none',
+                      WebkitUserSelect: 'none',
+                      msUserSelect: 'none'
+                    }}
+                  >
+                    <strong>PDF URL: {metadata["pdf_url"].substring(0, 100)}</strong>
+                  </button>
+                </a>
+              </div>
+
+            )}
+            {metadata["url"] && (
+              <div style={{ display: "inline-flex" }}>
+                <a href={metadata["url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
+                  <button style={{ width: '100%', textAlign: 'left' }}>
+                    <strong>URL: {metadata["url"].substring(0, 100)}</strong>
+                  </button>
+                </a>
+              </div>
+            )}
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
+              <div className="keywords-container" style={{ flexWrap: 'wrap', maxWidth: '80%' }}>
+                {metadata.Keywords && Array.isArray(metadata.Keywords) && metadata.Keywords.length > 0 && (
+                  metadata.Keywords.map((keyword, index) => (
+                    keyword === "" ? null : (
+                      <button
+                        key={index}
+                        className="keyword-button"
+                        onClick={() => handleKeywordClick(keyword)}
+                      >
+                        {/* {keyword} */}
+                        <Highlighter
+                          highlightClassName="highlighted-text"
+                          searchWords={[firstword]}
+                          textToHighlight={keyword}
+                        />
+                      </button>
+                    )
+                  ))
+                )}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', height: '40px' }}>
                 <button
+                  onClick={() => setModalOpen(true)}
+                  className="view-document"
                   style={{
-                    width: '100%',
-                    textAlign: 'left',
-                    userSelect: 'none', /* Prevent text selection */
-                    MozUserSelect: 'none',
-                    WebkitUserSelect: 'none',
-                    msUserSelect: 'none'
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent default link behavior
-                    setModalOpen(true)// Call your custom function
+                    height: '100%',
+                    fontSize: '16px', // Adjust the font size as needed
+                    lineHeight: '40px', // Match the height of the container
+                    padding: '0 16px', // Add horizontal padding as needed
                   }}
                 >
-                  <strong>Case URL: {metadata["case_url"].substring(0, 100)}</strong>
+                  Continue Reading
                 </button>
-              </a>
+              </div>
             </div>
-
-          )}
-          {metadata["pdf_url"] && (
-            <div style={{ display: "inline-flex" }}>
-              <a href={metadata["pdf_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
-                <button
-                  style={{
-                    width: '100%',
-                    textAlign: 'left',
-                    userSelect: 'none', /* Prevent text selection */
-                    MozUserSelect: 'none',
-                    WebkitUserSelect: 'none',
-                    msUserSelect: 'none'
-                  }}
-                >
-                  <strong>PDF URL: {metadata["pdf_url"].substring(0, 100)}</strong>
-                </button>
-              </a>
-            </div>
-
-          )}
-          {metadata["url"] && (
-            <div style={{ display: "inline-flex" }}>
-              <a href={metadata["url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}>
-                <button style={{ width: '100%', textAlign: 'left' }}>
-                  <strong>URL: {metadata["url"].substring(0, 100)}</strong>
-                </button>
-              </a>
-            </div>
-          )}
-          <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
-            <div className="keywords-container" style={{ flexWrap: 'wrap', maxWidth: '80%' }}>
-              {metadata.Keywords && Array.isArray(metadata.Keywords) && metadata.Keywords.length > 0 && (
-                metadata.Keywords.map((keyword, index) => (
-                  keyword === "" ? null : (
-                    <button
-                      key={index}
-                      className="keyword-button"
-                      onClick={() => handleKeywordClick(keyword)}
-                    >
-                      {/* {keyword} */}
-                      <Highlighter
-                        highlightClassName="highlighted-text"
-                        searchWords={[firstword]}
-                        textToHighlight={keyword}
-                      />
-                    </button>
-                  )
-                ))
-              )}
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', height: '40px' }}>
-              <button
-                onClick={() => setModalOpen(true)}
-                className="view-document"
-                style={{
-                  height: '100%',
-                  fontSize: '16px', // Adjust the font size as needed
-                  lineHeight: '40px', // Match the height of the container
-                  padding: '0 16px', // Add horizontal padding as needed
-                }}
-              >
-                Continue Reading
-              </button>
-            </div>
-          </div>
-          {isModalOpen && (
-            <DocumentModal
-              content={
-                <>
-                  {{ 'page': page_content, 'meta': metadata }}
-                  {/* <Highlighter
+            {isModalOpen && (
+              <DocumentModal
+                content={
+                  <>
+                    {{ 'page': page_content, 'meta': metadata }}
+                    {/* <Highlighter
                     highlightClassName="highlighted-text"
                     searchWords={searchRegexes}
                     // autoEscape={true}
@@ -511,7 +512,7 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
                     // textToHighlight={page_content + "\n\nDocument Type: " + metadata["Document Type"] + "\n\nJudges Involved: " + metadata["Judges"] + "\n\nKeywords: " + metadata["keywords"]}
                   // textToHighlight={Object.entries(metadata).map(([key, value]) => `${key}: ${value}`).join('\n\n')}
                   /> */}
-                  {/* <div>
+                    {/* <div>
                     {metadata.reference && metadata.reference.length > 0 && (
                       <select onChange={handleChange} value={selectedReference}>
                         <option value="">Select a reference</option>
@@ -523,18 +524,18 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
                       </select>
                     )}
                   </div> */}
-                </>
-              }
-              onClose={() => setModalOpen(false)}
-            />
-          )}
-          {is1ModalOpen && (
+                  </>
+                }
+                onClose={() => setModalOpen(false)}
+              />
+            )}
+            {is1ModalOpen && (
 
-            <DocumentModal
-              content={
-                <>
-                  {data.context}
-                  {/* <br /><br />
+              <DocumentModal
+                content={
+                  <>
+                    {data.context}
+                    {/* <br /><br />
                   <a href={metadata["case_url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}><button style={{ width: '100%', textAlign: 'left' }}><strong>Case URL: {metadata["case_url"].substring(0, 100)}</strong></button></a>
                   <br /><br />
 
@@ -544,164 +545,164 @@ function ResultCard({ item, searchWords, scores, sortByCaseName }) {
                   <a href={metadata["url"]} target="_blank" style={{ background: "#f9f9f9", color: "blue", textDecoration: "underline" }}><button style={{ width: '100%', textAlign: 'left' }}><strong>URL: {metadata["url"].substring(0, 100)}</strong></button></a>
                   <br /> */}
 
-                </>
-              }
-              onClose={() => set1ModalOpen(false)}
-            />
-          )}
-        </>
-      )}
+                  </>
+                }
+                onClose={() => set1ModalOpen(false)}
+              />
+            )}
+          </>
+        )}
 
 
 
 
-    </div>
+      </div>
 
 
-  );
+    );
 
-}
-
-
-function handleKeywordClick(keyword) {
-  // console.log("Keyword clicked:", keyword);
-  const newReference = event.target.value;
-  setSelectedReference(newReference); // Update the selected reference state
-  handleKeywordClick(newReference); // Trigger the desired action with the new reference
-
-  // Add your logic here for what happens when a keyword is clicked
-}
-
-function DocumentModal({ content, onClose }) {
-  let parsedData, parsedMeta;
-  // const content1='{\"Court/Tribunal\": \"International Court of Justice (ICJ)\", \"Judges Involved\": \"President Manfred LACHS, Registrar S. AQUARONE\", \"Legal Principles\": \"Article 48 of the Statute of the Court, Article 40 of the Rules of Court\", \"Full Case Overview\": \"- In May 1973, Pakistan instituted proceedings against India concerning 195 Pakistani prisoners of war whom, according to Pakistan, India proposed to hand over to Bangladesh, which was said to intend trying them for acts of genocide and crimes against humanity. India stated that there was no legal basis for the Court\'s jurisdiction in the matter and that Pakistan\'s Application was without legal effect. Pakistan having also filed a Request for the indication of provisional measures, the Court held public sittings to hear observations on this subject; India was not represented at the hearings. In July 1973, Pakistan asked the Court to postpone further consideration of its Request in order to facilitate the negotiations which were due to begin. Before any written pleadings had been filed, Pakistan informed the Court that negotiations had taken place, and requested the Court to record discontinuance of the proceedings. Accordingly, the case was removed from the List by an Order of 15 December 1973.\", \"Case Summary\": \"- Introduction: The ICJ issued an order regarding the trial of Pakistani prisoners of war in a case between Pakistan and India.\\n- Laws: The order extended the time limits for filing memorials by both governments.\\n-\", \"Conclusion\": \"The subsequent procedure was reserved for further decision.\", \"Document Summary\": \"The ICJ issued an order on 29 September 1973 in the case concerning the trial of Pakistani prisoners of war between Pakistan and India, extending filing deadlines for memorials.\", \"Decision\": \"The Court extended the time limits for filing memorials by the governments of Pakistan and India.\\nConclusion: The ICJ granted an extension for filing memorials in the case between Pakistan and India regarding the trial of Pakistani prisoners of war.\", \"Document Type\": \"Press Release (Unofficial)\", \"Date\": \"29 September 1973\", \"Case No.\": \"Not Found\", \"History of Proceedings\": \"The ICJ extended the filing deadlines for memorials by the governments of Pakistan and India in the case concerning the trial of Pakistani prisoners of war.\", \"Coram Composition\": \"President Manfred LACHS, Registrar S. AQUARONE\", \"Citation\": \"Trial of Pakistani Prisoners of War, Order of 29 September 1973, Z.C.J. Reports 1973, p. 344.\", \"Document type\": \"Summary of Judgement- Unofficial\", \"Document No.\": \"Summary 1973/1\", \"Keywords\": \"International Court of Justice, Pakistani prisoners of war, filing deadlines, memorials\", \"Case Details\": \"- Introduction\\n    A. Factual background: The ICJ issued an order regarding the trial of Pakistani prisoners of war in a case between Pakistan and India.\\n    B. The court\'s appellate function and the scope of the right of appeal to the court: Not Found\\n- Grounds of Appeal\\n    A. The second ground of appeal: rejection by the ICAO Council of the first preliminary objection.\\n        1. Whether the dispute between the Parties relates to the interpretation or application of the IASTA: Not Found\", \"Separate Opinion of Judge\": \"Not Found\", \"Articles Involved\": \"Article 48 of the Statute of the Court, Article 40 of the Rules of Court\"}'
-
-  console.log(content)
-  try {
-    parsedData = JSON.parse(content.props.children.page);
-
-    console.log("parsee....", parsedData)
-    parsedMeta = content.props.children.meta;
-
-    // console.log(parsedMeta)
-    // console.log("resss ... : ", parsedData)
-  } catch (error) {
-    console.error('Error parsing JSON:', error);
-    parsedData = { error: 'Invalid JSON' };
   }
 
-  const formatValue = (value) => {
-    if (typeof value === 'string') {
-      return value.split('\n').map((line, index) => (
-        <span key={index}>
-          {line}
-          <br />
-        </span>
-      ));
+
+  function handleKeywordClick(keyword) {
+    // console.log("Keyword clicked:", keyword);
+    const newReference = event.target.value;
+    setSelectedReference(newReference); // Update the selected reference state
+    handleKeywordClick(newReference); // Trigger the desired action with the new reference
+
+    // Add your logic here for what happens when a keyword is clicked
+  }
+
+  function DocumentModal({ content, onClose }) {
+    let parsedData, parsedMeta;
+    // const content1='{\"Court/Tribunal\": \"International Court of Justice (ICJ)\", \"Judges Involved\": \"President Manfred LACHS, Registrar S. AQUARONE\", \"Legal Principles\": \"Article 48 of the Statute of the Court, Article 40 of the Rules of Court\", \"Full Case Overview\": \"- In May 1973, Pakistan instituted proceedings against India concerning 195 Pakistani prisoners of war whom, according to Pakistan, India proposed to hand over to Bangladesh, which was said to intend trying them for acts of genocide and crimes against humanity. India stated that there was no legal basis for the Court\'s jurisdiction in the matter and that Pakistan\'s Application was without legal effect. Pakistan having also filed a Request for the indication of provisional measures, the Court held public sittings to hear observations on this subject; India was not represented at the hearings. In July 1973, Pakistan asked the Court to postpone further consideration of its Request in order to facilitate the negotiations which were due to begin. Before any written pleadings had been filed, Pakistan informed the Court that negotiations had taken place, and requested the Court to record discontinuance of the proceedings. Accordingly, the case was removed from the List by an Order of 15 December 1973.\", \"Case Summary\": \"- Introduction: The ICJ issued an order regarding the trial of Pakistani prisoners of war in a case between Pakistan and India.\\n- Laws: The order extended the time limits for filing memorials by both governments.\\n-\", \"Conclusion\": \"The subsequent procedure was reserved for further decision.\", \"Document Summary\": \"The ICJ issued an order on 29 September 1973 in the case concerning the trial of Pakistani prisoners of war between Pakistan and India, extending filing deadlines for memorials.\", \"Decision\": \"The Court extended the time limits for filing memorials by the governments of Pakistan and India.\\nConclusion: The ICJ granted an extension for filing memorials in the case between Pakistan and India regarding the trial of Pakistani prisoners of war.\", \"Document Type\": \"Press Release (Unofficial)\", \"Date\": \"29 September 1973\", \"Case No.\": \"Not Found\", \"History of Proceedings\": \"The ICJ extended the filing deadlines for memorials by the governments of Pakistan and India in the case concerning the trial of Pakistani prisoners of war.\", \"Coram Composition\": \"President Manfred LACHS, Registrar S. AQUARONE\", \"Citation\": \"Trial of Pakistani Prisoners of War, Order of 29 September 1973, Z.C.J. Reports 1973, p. 344.\", \"Document type\": \"Summary of Judgement- Unofficial\", \"Document No.\": \"Summary 1973/1\", \"Keywords\": \"International Court of Justice, Pakistani prisoners of war, filing deadlines, memorials\", \"Case Details\": \"- Introduction\\n    A. Factual background: The ICJ issued an order regarding the trial of Pakistani prisoners of war in a case between Pakistan and India.\\n    B. The court\'s appellate function and the scope of the right of appeal to the court: Not Found\\n- Grounds of Appeal\\n    A. The second ground of appeal: rejection by the ICAO Council of the first preliminary objection.\\n        1. Whether the dispute between the Parties relates to the interpretation or application of the IASTA: Not Found\", \"Separate Opinion of Judge\": \"Not Found\", \"Articles Involved\": \"Article 48 of the Statute of the Court, Article 40 of the Rules of Court\"}'
+
+    console.log(content)
+    try {
+      parsedData = JSON.parse(content.props.children.page);
+
+      console.log("parsee....", parsedData)
+      parsedMeta = content.props.children.meta;
+
+      // console.log(parsedMeta)
+      // console.log("resss ... : ", parsedData)
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      parsedData = { error: 'Invalid JSON' };
     }
-    return JSON.stringify(value, null, 4);
-  };
-  const [expanded, setExpanded] = useState(false);
 
-  // const handleScroll = (event) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  // };
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        onClose();
+    const formatValue = (value) => {
+      if (typeof value === 'string') {
+        return value.split('\n').map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ));
       }
+      return JSON.stringify(value, null, 4);
     };
+    const [expanded, setExpanded] = useState(false);
 
-    if (document && document.addEventListener) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
+    // const handleScroll = (event) => {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // };
 
-    return () => {
-      if (document && document.removeEventListener) {
-        document.removeEventListener('keydown', handleKeyDown);
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.key === 'Escape') {
+          onClose();
+        }
+      };
+
+      if (document && document.addEventListener) {
+        document.addEventListener('keydown', handleKeyDown);
       }
-    };
-  }, [onClose]);
 
-  return (
-    <div className="modal-backdrop">
-      <FocusOn enabled={true}>
-        <div className="modal-content">
-          <button onClick={onClose} className="close-modal">
-            Close
-          </button>
-          <div className="summary-header">
-            <strong>Summary</strong>
-          </div>
-          <div className="modal-body">
-            {Object.keys(parsedData).map((key) => (
-              <div key={key} className="key-value-pair">
-                <div className="key" style={{ fontWeight: 'bold' }}>{key}:</div>
-                <div className="value">
-                  {/* {key === 'Full Case Overview' && !expanded ? (
+      return () => {
+        if (document && document.removeEventListener) {
+          document.removeEventListener('keydown', handleKeyDown);
+        }
+      };
+    }, [onClose]);
+
+    return (
+      <div className="modal-backdrop">
+        <FocusOn enabled={true}>
+          <div className="modal-content">
+            <button onClick={onClose} className="close-modal">
+              Close
+            </button>
+            <div className="summary-header">
+              <strong>Summary</strong>
+            </div>
+            <div className="modal-body">
+              {Object.keys(parsedData).map((key) => (
+                <div key={key} className="key-value-pair">
+                  <div className="key" style={{ fontWeight: 'bold' }}>{key}:</div>
+                  <div className="value">
+                    {/* {key === 'Full Case Overview' && !expanded ? (
                     <button onClick={() => setExpanded(true)}>Expand</button>
                   ) : ( */}
                     <span>{formatValue(parsedData[key])}</span>
-                  {/* )} */}
+                    {/* )} */}
+                  </div>
                 </div>
+              ))}
+              {expanded && (
+                <button onClick={() => setExpanded(false)}>Collapse</button>
+              )}
+              <div className="meta-section">
+                {parsedMeta.case_url && (
+                  <div className="key-value-pair">
+                    <div className="key" style={{ fontWeight: 'bold' }}>Case URL:</div>
+                    <div className="value"><a href={parsedMeta.case_url} target="_blank" rel="noopener noreferrer">{parsedMeta.case_url}</a></div>
+                  </div>
+                )}
+                {parsedMeta.pdf_url && (
+                  <div className="key-value-pair">
+                    <div className="key" style={{ fontWeight: 'bold' }}>PDF URL:</div>
+                    <div className="value"><a href={parsedMeta.pdf_url} target="_blank" rel="noopener noreferrer">{parsedMeta.pdf_url}</a></div>
+                  </div>
+                )}
               </div>
-            ))}
-            {expanded && (
-              <button onClick={() => setExpanded(false)}>Collapse</button>
-            )}
-            <div className="meta-section">
-              {parsedMeta.case_url && (
-                <div className="key-value-pair">
-                  <div className="key" style={{ fontWeight: 'bold' }}>Case URL:</div>
-                  <div className="value"><a href={parsedMeta.case_url} target="_blank" rel="noopener noreferrer">{parsedMeta.case_url}</a></div>
-                </div>
-              )}
-              {parsedMeta.pdf_url && (
-                <div className="key-value-pair">
-                  <div className="key" style={{ fontWeight: 'bold' }}>PDF URL:</div>
-                  <div className="value"><a href={parsedMeta.pdf_url} target="_blank" rel="noopener noreferrer">{parsedMeta.pdf_url}</a></div>
-                </div>
-              )}
             </div>
           </div>
-        </div>
-      </FocusOn>
-    </div>
+        </FocusOn>
+      </div>
 
-  );
-}
+    );
+  }
 
-// DocumentModal.propTypes = {
-//   content: PropTypes.string.isRequired,
-//   onClose: PropTypes.func.isRequired,
-// };
+  // DocumentModal.propTypes = {
+  //   content: PropTypes.string.isRequired,
+  //   onClose: PropTypes.func.isRequired,
+  // };
 
-ResultCard.propTypes = {
-  item: PropTypes.shape({
-    page_content: PropTypes.string.isRequired,
-    metadata: PropTypes.shape({
-      Date: PropTypes.string,
-      "Parties Involved": PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.string),
-      ]),
-      "Case Name": PropTypes.string,
-      "Court Name": PropTypes.string,
-      "Document Type": PropTypes.string,
-      "Case Summary": PropTypes.string,
-      // "scores": PropTypes.string,
-      Keywords: PropTypes.arrayOf(PropTypes.string), // Add this line
+  ResultCard.propTypes = {
+    item: PropTypes.shape({
+      page_content: PropTypes.string.isRequired,
+      metadata: PropTypes.shape({
+        Date: PropTypes.string,
+        "Parties Involved": PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.arrayOf(PropTypes.string),
+        ]),
+        "Case Name": PropTypes.string,
+        "Court Name": PropTypes.string,
+        "Document Type": PropTypes.string,
+        "Case Summary": PropTypes.string,
+        // "scores": PropTypes.string,
+        Keywords: PropTypes.arrayOf(PropTypes.string), // Add this line
+      }).isRequired,
     }).isRequired,
-  }).isRequired,
 
-  // searchWords: PropTypes.shape({
-  // Keywords: PropTypes.arrayOf(PropTypes.string), 
-  // })
-};
-const [searchQuery, setSearchQuery] = useState(null);
+    // searchWords: PropTypes.shape({
+    // Keywords: PropTypes.arrayOf(PropTypes.string), 
+    // })
+  };
+  const [searchQuery, setSearchQuery] = useState(null);
   // const [searchQuery, setSearchQuery] = useState("");
   // const [filters, setFilters] = useState({
   // icj: false,
@@ -775,8 +776,8 @@ const [searchQuery, setSearchQuery] = useState(null);
   const [s_user_id, setUserid] = useState();
   const [feedback_data, setFeedback_data] = useState(null);
   // const { results, setResults,user, setUser } = useContext(ResultsContext);
-  
-  const [ results, setResults ] = useState(null);
+
+  const [results, setResults] = useState(null);
   // const { user, setUser } = useState(null);
 
   const handleModalOpen = () => setModalShow(true);
@@ -1227,7 +1228,7 @@ const [searchQuery, setSearchQuery] = useState(null);
   }, []);
 
   // Debounced version of fetchSuggestions
-  const debouncedFetchSuggestions = useCallback(debounce(fetchSuggestions, 10), []);
+  // const debouncedFetchSuggestions = useCallback(debounce(fetchSuggestions, 10), []);
 
   // useEffect(() => {
   //   if (searchQuery.length > 2) {
@@ -1299,11 +1300,11 @@ const [searchQuery, setSearchQuery] = useState(null);
   //     .flatMap(item => item[1].metadata["Document Type"])
   //     .filter(type => typeof type === 'string' && type.trim() !== "")
   //   );
-    const extractUniqueDocumentTypes = () => {
-      const documentTypes = new Set(results.flatMap(item => item[1].metadata["Document Type"] || [])
-        .filter(type =>  type !== "")
-      );
-  
+  const extractUniqueDocumentTypes = () => {
+    const documentTypes = new Set(results.flatMap(item => item[1].metadata["Document Type"] || [])
+      .filter(type => type !== "")
+    );
+
     console.log(documentTypes)
     setUniqueDocumentTypes(Array.from(documentTypes)); // Convert Set to Array
   };
@@ -1319,7 +1320,7 @@ const [searchQuery, setSearchQuery] = useState(null);
   };
 
   useEffect(() => {
-    console.log(results)
+    console.log(results);
     if (results) {
       extractUniqueMonths(results);
       extractUniqueYears(results);
@@ -1329,7 +1330,14 @@ const [searchQuery, setSearchQuery] = useState(null);
       extractUniqueDocumentTypes(results);
       extractUniqueKeywords(results);
     }
-  }, [results]);
+  }, [
+    results,
+    extractUniqueCourts,
+    extractUniqueDocumentTypes,
+    extractUniqueJudges,
+    extractUniqueKeywords,
+    extractUniqueParties,
+  ]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -1417,50 +1425,50 @@ const [searchQuery, setSearchQuery] = useState(null);
   //     setFeedback_data(''); // Clear feedback data
   //   }, 2000); // Display message for 2 seconds
   // };
-    return(
-        <div className="main-container">
-        {isLoggedIn ? (
-          <>
-            {!results && (<div className="full-page-container">
-              <div className="centered-content">
-                <center>
-                  <div style={{ paddingTop: "50px", paddingBottom: "30px" }}>
-                    <Image src={imag} alt="My Image" style={{ width: '221px', height: '102p' }} />
-                  </div></center>
-                <input
-                  id="querr"
-                  type="text"
-                  value={searchQuery}
-                  onKeyDown={handleKeyDown}
-                  style={{ borderRadius: '10px', }}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setShowSuggestions(true)}
-                  onBlur={() => setTimeout(() => setShowSuggestions(false), 10)}
-                  placeholder="Enter search query..."
-                  className="search-query"
-                />
-                <button onClick={handleSearch} className="search-button">
-                  Search
-                </button>
-                <div className="flex flex-col items-center space-y-4 bg-#f8f8f8">
-                    <div style={{ paddingTop: '40px' }}>
-                      <p className="text-center text-lg font-medium bg-#f8f8f8" style={{ color: '#918f8f' }}>List of Available Courts</p>
-                    </div>
-                    <div className="w-full text-center bg-#EBEBEB" style={{ color: '#918f8f' }}>
-                      <p>International Court of Justice(ICJ) <strong>|</strong> European Court of Human Rights(HUDOC/ECHR) <strong>|</strong> International Criminal Court(ICC) <strong>|</strong> </p>
-                      <p>United Nations Committee Against Torture(UN CAT) <strong>|</strong> United Nations Committee on Economic, Social and Cultural Rights(UN CESCR) <strong>|</strong> </p>
-                      <p>United Nations Committee on the Elimination of Racial Discrimination(UN CERD) <strong>|</strong> United Nations Committee on the Rights of the Child(UN CRC) <strong>|</strong></p>
-                      <p> United Nations Committee on the Rights of Persons with Disabilities(UN CRPD) <strong>|</strong> United Nations Committee on Enforced Disappearances(UN CED)  <strong>|</strong> </p>
-                      <p>United Nations Committee on the Elimination of Discrimination against Women(UN CEDAW)</p>
-                      <p></p>
-                    </div>
-                  </div>
-                {/* <button  className="search-button">
+  return (
+    <div className="main-container">
+      {isLoggedIn ? (
+        <>
+          {!results && (<div className="full-page-container">
+            <div className="centered-content">
+              <center>
+                <div style={{ paddingTop: "50px", paddingBottom: "30px" }}>
+                  <Image src={imag} alt="My Image" style={{ width: '221px', height: '102p' }} />
+                </div></center>
+              <input
+                id="querr"
+                type="text"
+                value={searchQuery}
+                onKeyDown={handleKeyDown}
+                style={{ borderRadius: '10px', }}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 10)}
+                placeholder="Enter search query..."
+                className="search-query"
+              />
+              <button onClick={handleSearch} className="search-button">
+                Search
+              </button>
+              <div className="flex flex-col items-center space-y-4 bg-#f8f8f8">
+                <div style={{ paddingTop: '40px' }}>
+                  <p className="text-center text-lg font-medium bg-#f8f8f8" style={{ color: '#918f8f' }}>List of Available Courts</p>
+                </div>
+                <div className="w-full text-center bg-#EBEBEB" style={{ color: '#918f8f' }}>
+                  <p>International Court of Justice(ICJ) <strong>|</strong> European Court of Human Rights(HUDOC/ECHR) <strong>|</strong> International Criminal Court(ICC) <strong>|</strong> </p>
+                  <p>United Nations Committee Against Torture(UN CAT) <strong>|</strong> United Nations Committee on Economic, Social and Cultural Rights(UN CESCR) <strong>|</strong> </p>
+                  <p>United Nations Committee on the Elimination of Racial Discrimination(UN CERD) <strong>|</strong> United Nations Committee on the Rights of the Child(UN CRC) <strong>|</strong></p>
+                  <p> United Nations Committee on the Rights of Persons with Disabilities(UN CRPD) <strong>|</strong> United Nations Committee on Enforced Disappearances(UN CED)  <strong>|</strong> </p>
+                  <p>United Nations Committee on the Elimination of Discrimination against Women(UN CEDAW)</p>
+                  <p></p>
+                </div>
+              </div>
+              {/* <button  className="search-button">
               pay
             </button> */}
-                {/* <PayPalScriptProvider options={initialOptions} createOrder={createOrder} onApprove={onApprove}><PayPalButtons/></PayPalScriptProvider> */}
-                {/* <PayPalButton>pay</PayPalButton> */}
-                {/* <PayPalBtn
+              {/* <PayPalScriptProvider options={initialOptions} createOrder={createOrder} onApprove={onApprove}><PayPalButtons/></PayPalScriptProvider> */}
+              {/* <PayPalButton>pay</PayPalButton> */}
+              {/* <PayPalBtn
               amount="5"
               currency="USD"
               createSubscription={paypalSubscribe}
@@ -1469,26 +1477,190 @@ const [searchQuery, setSearchQuery] = useState(null);
               onError={paypalOnError}
               onCancel={paypalOnError}
             /> */}
-                {loading && (
-                  <div className="spinner-overlay">
-                    <div className='spinner'>
+              {loading && (
+                <div className="spinner-overlay">
+                  <div className='spinner'>
 
-                      {/* <Lottie animationData={nopage} loop={true} renderer={'svg'} /> */}
-                      <ClipLoader size={150} color={"#123abc"} loading={loading} />
-                    </div>
+                    {/* <Lottie animationData={nopage} loop={true} renderer={'svg'} /> */}
+                    <ClipLoader size={150} color={"#123abc"} loading={loading} />
                   </div>
-                  // <div className="loading-bar">
-                  //   Loading...
-                  // </div>
-                )}
+                </div>
+                // <div className="loading-bar">
+                //   Loading...
+                // </div>
+              )}
 
+              {showSuggestions && suggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        setSearchQuery(searchQuery + " " + suggestion.token);
+                      }}
+                      onMouseDown={(e) => e.preventDefault()} // Prevent onBlur from firing on click
+                    >
+                      {suggestion.token}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          )}
+
+          {results && (
+            <div className="left-filters">
+              {/* style={  {marginTop:'70px',width:'200px', position: 'fixed', top: '10px', left:'10px'}} */}
+              <div >
+                {/* <div>
+            <img src={imag} alt="My Image" style={{ width: '150px', height: 'auto' }} />
+          </div> */}
+                {results && (
+                  <div >
+                    {/* <div className="filter-title">Parties Involved</div> */}
+                    <select
+                      style={{ border: "1px solid", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedParty || ""}
+                      onChange={(e) => setSelectedParty(e.target.value)}
+                    >
+                      <option value="">Parties Involved</option>
+                      {uniqueParties.map((party) => (
+                        <option key={party} value={party}>
+                          {party}
+                        </option>
+                      ))}
+                    </select>
+
+                    <select
+                      style={{ border: "1px solid ", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedJudge || ""}
+                      onChange={(e) => setSelectedJudge(e.target.value)}
+                    >
+                      <option value="">Judge Involved</option>
+                      {uniqueJudges.map((judge) => (
+                        <option key={judge} value={judge}>
+                          {judge}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* <div className="filter-title">Document Type</div> */}
+                    <select
+                      style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedDocumentType || ""}
+                      onChange={(e) => setSelectedDocumentType(e.target.value)}
+                    >
+                      <option value="">Document Type</option>
+                      {uniqueDocumentTypes.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* <div className="filter-title">Keyword</div> */}
+                    <select
+                      style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedKeyword || ""}
+                      onChange={(e) => setSelectedKeyword(e.target.value)}
+                    >
+                      <option value="">Select Keyword</option>
+                      {uniqueKeywords.map((keyword) => (
+                        <option key={keyword} value={keyword}>
+                          {keyword}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <div className="filter-title">Month</div> */}
+                    {/* Date Filters */}
+                    <select
+                      style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedMonth || ""}
+                      onChange={(e) => setSelectedMonth(e.target.value)}
+                    >
+                      <option value="">Select Month</option>
+                      {uniqueMonths.map((month) => (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      ))}
+                    </select>
+                    {/* ...other left-side filters if any... */}
+                    {/* <div className="filter-title">Year</div> */}
+                    {/* Date Filters */}
+                    <select
+                      style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedYear || ""}
+                      onChange={(e) => setSelectedYear(e.target.value)}
+                    >
+                      <option value="">Select Year</option>
+                      {uniqueYears.map((year) => (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <div className="filter-title">Court Name</div> */}
+                    <select
+                      style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
+                      value={selectedCourt || ""}
+                      onChange={(e) => setSelectedCourt(e.target.value)}
+                    >
+                      <option value="">Select Court Name</option>
+                      {uniqueCourts.map((court) => (
+                        <option key={court} value={court}>
+                          {court}
+                        </option>
+                      ))}
+                    </select>
+
+
+
+                    {/* ...other right-side filters if any... */}
+                    {/* </div> */}
+                  </div>)
+                }
+
+
+              </div>
+            </div>)}
+
+          {results && (
+            <div  >
+              <div style={{ justifyContent: 'space-around' }}>
+                <div className="search-bar">
+                  {/* <h1>Human Rights Dossier</h1> */}
+                  {/* <p>ICC, ICJ, HUDOC/ECHR, UN</p> */}
+                  {/* Filter UI for Keywords */}
+
+                  <input id="querr"
+                    type="text"
+                    value={searchQuery}
+                    style={{ borderRadius: '10px', }}
+
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => setShowSuggestions(true)}
+
+                    onKeyDown={handleKeyDown}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 10)}
+                    // onChange={fetchSuggestions((e) => setSearchQuery(e.target.value))}. (Score: {suggestion.score})
+                    placeholder="Enter search query..."
+                    className="search-query1"
+                  />
+                  <div style={{ justifyItems: 'center', paddingBottom: '8px' }}>
+                    <center><button onClick={handleSearch} className="search-button">
+                      Search
+                    </button></center> </div>
+                </div>
                 {showSuggestions && suggestions.length > 0 && (
-                  <ul className="suggestions-list">
+                  <ul>
                     {suggestions.map((suggestion, index) => (
                       <li
                         key={index}
                         onClick={() => {
                           setSearchQuery(searchQuery + " " + suggestion.token);
+                          // setShowSuggestions(true);
                         }}
                         onMouseDown={(e) => e.preventDefault()} // Prevent onBlur from firing on click
                       >
@@ -1497,264 +1669,100 @@ const [searchQuery, setSearchQuery] = useState(null);
                     ))}
                   </ul>
                 )}
+
+
               </div>
-            </div>
-            )}
 
-            {results && (
-              <div className="left-filters">
-                {/* style={  {marginTop:'70px',width:'200px', position: 'fixed', top: '10px', left:'10px'}} */}
-                <div >
-                  {/* <div>
-            <img src={imag} alt="My Image" style={{ width: '150px', height: 'auto' }} />
-          </div> */}
-                  {results && (
-                    <div >
-                      {/* <div className="filter-title">Parties Involved</div> */}
-                      <select
-                        style={{ border: "1px solid", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedParty || ""}
-                        onChange={(e) => setSelectedParty(e.target.value)}
-                      >
-                        <option value="">Parties Involved</option>
-                        {uniqueParties.map((party) => (
-                          <option key={party} value={party}>
-                            {party}
-                          </option>
-                        ))}
-                      </select>
+              <div className="central-content">
+                {!results && <center>
+                  <div style={{ paddingTop: "140px" }}>
+                    <Image src={imag} alt="My Image" style={{ width: '221px', height: '102p' }} />
+                  </div></center>}
 
-                      <select
-                        style={{ border: "1px solid ", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedJudge || ""}
-                        onChange={(e) => setSelectedJudge(e.target.value)}
-                      >
-                        <option value="">Judge Involved</option>
-                        {uniqueJudges.map((judge) => (
-                          <option key={judge} value={judge}>
-                            {judge}
-                          </option>
-                        ))}
-                      </select>
-
-                      {/* <div className="filter-title">Document Type</div> */}
-                      <select
-                        style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedDocumentType || ""}
-                        onChange={(e) => setSelectedDocumentType(e.target.value)}
-                      >
-                        <option value="">Document Type</option>
-                        {uniqueDocumentTypes.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
-
-                      {/* <div className="filter-title">Keyword</div> */}
-                      <select
-                        style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedKeyword || ""}
-                        onChange={(e) => setSelectedKeyword(e.target.value)}
-                      >
-                        <option value="">Select Keyword</option>
-                        {uniqueKeywords.map((keyword) => (
-                          <option key={keyword} value={keyword}>
-                            {keyword}
-                          </option>
-                        ))}
-                      </select>
-                      {/* <div className="filter-title">Month</div> */}
-                      {/* Date Filters */}
-                      <select
-                        style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedMonth || ""}
-                        onChange={(e) => setSelectedMonth(e.target.value)}
-                      >
-                        <option value="">Select Month</option>
-                        {uniqueMonths.map((month) => (
-                          <option key={month} value={month}>
-                            {month}
-                          </option>
-                        ))}
-                      </select>
-                      {/* ...other left-side filters if any... */}
-                      {/* <div className="filter-title">Year</div> */}
-                      {/* Date Filters */}
-                      <select
-                        style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedYear || ""}
-                        onChange={(e) => setSelectedYear(e.target.value)}
-                      >
-                        <option value="">Select Year</option>
-                        {uniqueYears.map((year) => (
-                          <option key={year} value={year}>
-                            {year}
-                          </option>
-                        ))}
-                      </select>
-                      {/* <div className="filter-title">Court Name</div> */}
-                      <select
-                        style={{ border: "1px solid black", borderColor: '#343434', color: '#343434', borderRadius: "10px" }}
-                        value={selectedCourt || ""}
-                        onChange={(e) => setSelectedCourt(e.target.value)}
-                      >
-                        <option value="">Select Court Name</option>
-                        {uniqueCourts.map((court) => (
-                          <option key={court} value={court}>
-                            {court}
-                          </option>
-                        ))}
-                      </select>
-
-
-
-                      {/* ...other right-side filters if any... */}
-                      {/* </div> */}
-                    </div>)
-                  }
-
-
-                </div>
-              </div>)}
-
-            {results && (
-              <div  >
-                <div style={{ justifyContent: 'space-around' }}>
-                  <div className="search-bar">
-                    {/* <h1>Human Rights Dossier</h1> */}
-                    {/* <p>ICC, ICJ, HUDOC/ECHR, UN</p> */}
-                    {/* Filter UI for Keywords */}
-
-                    <input id="querr"
-                      type="text"
-                      value={searchQuery}
-                      style={{ borderRadius: '10px', }}
-
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onFocus={() => setShowSuggestions(true)}
-
-                      onKeyDown={handleKeyDown}
-                      onBlur={() => setTimeout(() => setShowSuggestions(false), 10)}
-                      // onChange={fetchSuggestions((e) => setSearchQuery(e.target.value))}. (Score: {suggestion.score})
-                      placeholder="Enter search query..."
-                      className="search-query1"
-                    />
-                    <div style={{ justifyItems: 'center', paddingBottom: '8px' }}>
-                      <center><button onClick={handleSearch} className="search-button">
-                        Search
-                      </button></center> </div>
-                  </div>
-                  {showSuggestions && suggestions.length > 0 && (
-                    <ul>
-                      {suggestions.map((suggestion, index) => (
-                        <li
-                          key={index}
-                          onClick={() => {
-                            setSearchQuery(searchQuery + " " + suggestion.token);
-                            // setShowSuggestions(true);
-                          }}
-                          onMouseDown={(e) => e.preventDefault()} // Prevent onBlur from firing on click
-                        >
-                          {suggestion.token}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-
-                </div>
-
-                <div className="central-content">
-                  {!results && <center>
-                    <div style={{ paddingTop: "140px" }}>
-                      <img src={imag} alt="My Image" style={{ width: '221px', height: '102p' }} />
-                    </div></center>}
-
-                  {/* <div>Related Items: {keywo}</div> */}
-                  <div>
-                    {results && (<div className="toggle">
-                      <div>
-                        {/* <label className="switch-label">Sort by Date</label>
+                {/* <div>Related Items: {keywo}</div> */}
+                <div>
+                  {results && (<div className="toggle">
+                    <div>
+                      {/* <label className="switch-label">Sort by Date</label>
                           <label className="switch">
                             <input type="checkbox" checked={sortByDate} onChange={toggleSortMode} />
                             <span className="slider round"></span>
                           </label> */}
-                        {/* {sortByDate && ( */}
-                        {/* <div>
+                      {/* {sortByDate && ( */}
+                      {/* <div>
                             <button onClick={toggleSortDirection} onChange={toggleSortMode}>
                               {sortDirection === "newer" ? "Oldest to Newest ⬇️" : "Newest to Oldest ⬆️"}
                             </button>
                           </div> */}
-                        <div className="toggle">
-                          {sortByDate && (
-                            <div>
-                              <button onClick={toggleSortDirection}>
-                                {sortDirection === "newer" ? "Newest to Oldest ⬇️" : "Oldest to Newest ⬆️"}
-                              </button>
-                            </div>
-                          )}
+                      <div className="toggle">
+                        {sortByDate && (
                           <div>
-                            <label className="switch-label">Sort by Date</label>
-                            <label className="switch">
-                              <input type="checkbox" checked={sortByDate} onChange={toggleSortMode} />
-                              <span className="slider round"></span>
-                            </label>
-
+                            <button onClick={toggleSortDirection}>
+                              {sortDirection === "newer" ? "Newest to Oldest ⬇️" : "Oldest to Newest ⬆️"}
+                            </button>
                           </div>
-                          {/* <div>
+                        )}
+                        <div>
+                          <label className="switch-label">Sort by Date</label>
+                          <label className="switch">
+                            <input type="checkbox" checked={sortByDate} onChange={toggleSortMode} />
+                            <span className="slider round"></span>
+                          </label>
+
+                        </div>
+                        {/* <div>
                 <label className="switch-label">Sort by Case Name</label>
                 <label className="switch">
                   <input type="checkbox" checked={sortByCaseName} onChange={toggleSortByCaseName} />
                   <span className="slider round"></span>
                 </label>
               </div> */}
-                          {/* <div>
+                        {/* <div>
               <label className="switch-label">Group by Score</label>
               <label className="switch">
                 <input type="checkbox" checked={group} onChange={togglegroupedMode} />
                 <span className="slider round"></span>
               </label>
             </div> */}
-                        </div>
-                        {/* )} */}
                       </div>
+                      {/* )} */}
+                    </div>
 
-                      <div>
-                        <label className="switch-label">Sort by Case Name</label>
-                        <label className="switch">
-                          <input type="checkbox" checked={sortByCaseName} onChange={toggleSortByCaseName} />
-                          <span className="slider round"></span>
-                        </label>
-                      </div>
+                    <div>
+                      <label className="switch-label">Sort by Case Name</label>
+                      <label className="switch">
+                        <input type="checkbox" checked={sortByCaseName} onChange={toggleSortByCaseName} />
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
 
 
-                      {/* <div>
+                    {/* <div>
                   <label className="switch-label">Group by Score</label>
                   <label className="switch">
                     <input type="checkbox" checked={group} onChange={togglegroupedMode} />
                     <span className="slider round"></span>
                   </label>
                 </div>*/}
-                    </div>)}
-                  </div>
-                  <div className="search-results-container">
+                  </div>)}
+                </div>
+                <div className="search-results-container">
 
-                    <div className="search-results">
-                      {loading ? (
-                        <div className="spinner-overlay">
-                          <div className='spinner'>
+                  <div className="search-results">
+                    {loading ? (
+                      <div className="spinner-overlay">
+                        <div className='spinner'>
 
-                            {/* <Lottie animationData={nopage} loop={true} renderer={'svg'} /> */}
-                            <ClipLoader size={150} color={"#123abc"} loading={loading} />
-                          </div>
+                          {/* <Lottie animationData={nopage} loop={true} renderer={'svg'} /> */}
+                          <ClipLoader size={150} color={"#123abc"} loading={loading} />
                         </div>
-                        // <div className="loading-bar">
-                        //   Loading...
-                        // </div>
-                      ) : (
-                        <div>
-                          {/* <button onClick={toggleSortMode} className="toggle-button">
+                      </div>
+                      // <div className="loading-bar">
+                      //   Loading...
+                      // </div>
+                    ) : (
+                      <div>
+                        {/* <button onClick={toggleSortMode} className="toggle-button">
                         {sortByDate ? 'Sort by Score' : 'Sort by Date'}
                         </button>
                         <button onClick={togglegroupedMode} className="toggle-button">
@@ -1762,149 +1770,149 @@ const [searchQuery, setSearchQuery] = useState(null);
                         </button> */}
 
 
-                          {/* <Switch {...label} disabled defaultChecked >{sortByDate ? 'Sort by Score' : 'Sort by Date'}</Switch> */}
+                        {/* <Switch {...label} disabled defaultChecked >{sortByDate ? 'Sort by Score' : 'Sort by Date'}</Switch> */}
 
-                          {sortByCaseName ? (
-                            Object.values(
-                              results.reduce((acc, item) => {
-                                // const caseName = item[1].metadata["Case Name"] || "Not Available";
-                                const caseName = (item[1].metadata["Case Name"] || "Not Available").replace(/\d+/g, '');
-                                if (!acc[caseName]) {
-                                  acc[caseName] = {
-                                    caseName,
-                                    items: [],
-                                    isOpen: true,
-                                  };
-                                }
-                                acc[caseName].items.push(item);
-                                return acc;
-                              }, {})
-                            ).map((group, index) => (
-                              <div key={group.caseName} style={{ borderRadius: '5px', borderWidth: '0.5px', borderColor: 'black', backgroundColor: index % 2 === 0 ? '#e7e3e3' : '#c3c3c6', marginBottom: index !== group.length - 1 ? '20px' : '0' }}>
-                                <div className="accordion-header" onClick={() => toggleAccordion(group.caseName)} style={{ display: 'flex', justifyContent: 'space-between', padding: '5', textAlign: "center" }}>
-                                  <div style={{ fontSize: '1.2em', padding: '10px' }}><strong>{group.caseName}</strong></div>
-                                  <span className="accordion-toggle" style={{ fontSize: '2em', paddingRight: '10px', textAlign: "center" }}>
-                                    {openAccordion.includes(group.caseName) ? "-" : "+"}
-                                  </span>
-                                </div>
-                                {openAccordion.includes(group.caseName) && (
-                                  <div>
-                                    {group.items
-                                      .sort((a, b) => {
-                                        if (sortByDate) {
-                                          const dateA = new Date(a[1].metadata.Date);
-                                          const dateB = new Date(b[1].metadata.Date);
-                                          return sortDirectionFactor * (dateB - dateA); // Apply the sort direction factor
-                                        } else {
-                                          return 0; // No sorting if only sorting by case name
-                                        }
-                                      })
-                                      .map((iitem, iindex) => (
-                                        <div key={`${group.caseName}_${iindex}`} style={{ padding: '10px' }}>
-                                          <ResultCard
-                                            key={`${group.caseName}_${iindex}`}
-                                            item={iitem}
-                                            searchWords={keywo}
-                                            sortByCaseName={sortByCaseName}
-                                          />
-                                        </div>
-                                      ))}
-                                  </div>
-                                )}
+                        {sortByCaseName ? (
+                          Object.values(
+                            results.reduce((acc, item) => {
+                              // const caseName = item[1].metadata["Case Name"] || "Not Available";
+                              const caseName = (item[1].metadata["Case Name"] || "Not Available").replace(/\d+/g, '');
+                              if (!acc[caseName]) {
+                                acc[caseName] = {
+                                  caseName,
+                                  items: [],
+                                  isOpen: true,
+                                };
+                              }
+                              acc[caseName].items.push(item);
+                              return acc;
+                            }, {})
+                          ).map((group, index) => (
+                            <div key={group.caseName} style={{ borderRadius: '5px', borderWidth: '0.5px', borderColor: 'black', backgroundColor: index % 2 === 0 ? '#e7e3e3' : '#c3c3c6', marginBottom: index !== group.length - 1 ? '20px' : '0' }}>
+                              <div className="accordion-header" onClick={() => toggleAccordion(group.caseName)} style={{ display: 'flex', justifyContent: 'space-between', padding: '5', textAlign: "center" }}>
+                                <div style={{ fontSize: '1.2em', padding: '10px' }}><strong>{group.caseName}</strong></div>
+                                <span className="accordion-toggle" style={{ fontSize: '2em', paddingRight: '10px', textAlign: "center" }}>
+                                  {openAccordion.includes(group.caseName) ? "-" : "+"}
+                                </span>
                               </div>
-                            ))
-                          ) : groupedResults ? (
-                            Object.keys(groupedResults)
-                              .sort((a, b) => parseInt(b) - parseInt(a))
-                              .map((scoreGroup) => (
-                                <div key={scoreGroup}>
-                                  <p>Score: {scoreGroup}%</p>
-                                  {groupedResults[scoreGroup]
+                              {openAccordion.includes(group.caseName) && (
+                                <div>
+                                  {group.items
                                     .sort((a, b) => {
-                                      const dateA = new Date(a[1].metadata.Date);
-                                      const dateB = new Date(b[1].metadata.Date);
-                                      return dateB - dateA;
+                                      if (sortByDate) {
+                                        const dateA = new Date(a[1].metadata.Date);
+                                        const dateB = new Date(b[1].metadata.Date);
+                                        return sortDirectionFactor * (dateB - dateA); // Apply the sort direction factor
+                                      } else {
+                                        return 0; // No sorting if only sorting by case name
+                                      }
                                     })
-                                    .map((item, index) => (
-                                      // <ResultCard key={index} item={item} searchWords={keywo} />
-                                      <ResultCard key={`${scoreGroup}_${index}`} item={item} searchWords={keywo} sortByCaseName={sortByCaseName} />
+                                    .map((iitem, iindex) => (
+                                      <div key={`${group.caseName}_${iindex}`} style={{ padding: '10px' }}>
+                                        <ResultCard
+                                          key={`${group.caseName}_${iindex}`}
+                                          item={iitem}
+                                          searchWords={keywo}
+                                          sortByCaseName={sortByCaseName}
+                                        />
+                                      </div>
                                     ))}
                                 </div>
+                              )}
+                            </div>
+                          ))
+                        ) : groupedResults ? (
+                          Object.keys(groupedResults)
+                            .sort((a, b) => parseInt(b) - parseInt(a))
+                            .map((scoreGroup) => (
+                              <div key={scoreGroup}>
+                                <p>Score: {scoreGroup}%</p>
+                                {groupedResults[scoreGroup]
+                                  .sort((a, b) => {
+                                    const dateA = new Date(a[1].metadata.Date);
+                                    const dateB = new Date(b[1].metadata.Date);
+                                    return dateB - dateA;
+                                  })
+                                  .map((item, index) => (
+                                    // <ResultCard key={index} item={item} searchWords={keywo} />
+                                    <ResultCard key={`${scoreGroup}_${index}`} item={item} searchWords={keywo} sortByCaseName={sortByCaseName} />
+                                  ))}
+                              </div>
+                            ))
+                        ) : (
+                          results &&
+                          (results.length > 0 ? (
+                            // setSearchPerformed(true),
+                            results
+                              .sort((a, b) => {
+                                // Custom sorting function to place cards with case name "Not Available" at the bottom
+                                const caseNameA = a[1].metadata["Case Name"] || '';
+                                const caseNameB = b[1].metadata["Case Name"] || '';
+
+                                // Compare case names
+                                if (
+                                  (caseNameA === "Not Available" && caseNameB !== "Not Available") ||
+                                  (caseNameA === "" && caseNameB !== "") ||
+                                  (caseNameA === "Not found" && caseNameB !== "Not found") ||
+                                  (caseNameA === "Not mentioned" && caseNameB !== "Not mentioned")
+                                ) {
+                                  return 1; // Place case name "Not Available" at the bottom
+                                } else if (
+                                  (caseNameA !== "Not Available" && caseNameB === "Not Available") ||
+                                  (caseNameA !== "" && caseNameB === "") ||
+                                  (caseNameA !== "Not found" && caseNameB === "Not found") ||
+                                  (caseNameA !== "Not mentioned" && caseNameB === "Not mentioned")
+                                ) {
+                                  return -1; // Place case name "Not Available" at the bottom
+                                }
+
+                                // Compare empty fields count
+                                const getEmptyFieldsCount = (item) => {
+                                  let count = 0;
+                                  if (!item[1].metadata["Case Name"] || item[1].metadata["Case Name"] === "Not Available") count++;
+                                  if (!item[1].metadata["Case Summary"] || item[1].metadata["Case Summary"] === "Not Available") count++;
+                                  if (!item[1].metadata["Document Summary"] || item[1].metadata["Document Summary"] === "Not Available") count++;
+                                  if (!item[1].metadata["Case URL"]) count++;
+                                  if (!item[1].metadata["PDF URL"]) count++;
+                                  if (!item[1].metadata["URL"]) count++;
+                                  return count;
+                                };
+
+                                const emptyFieldsCountA = getEmptyFieldsCount(a);
+                                const emptyFieldsCountB = getEmptyFieldsCount(b);
+
+                                if (emptyFieldsCountA > emptyFieldsCountB) {
+                                  return 1; // Place item with more empty fields at the bottom
+                                } else if (emptyFieldsCountA < emptyFieldsCountB) {
+                                  return -1; // Place item with fewer empty fields at the top
+                                }
+
+                                return 0; // Maintain original order if everything else is equal
+                              })
+                              .map((item, index) => (
+                                <ResultCard
+                                  key={index}
+                                  item={item}
+                                  searchWords={keywo}
+                                  sortByCaseName={sortByCaseName}
+                                />
                               ))
                           ) : (
-                            results &&
-                            (results.length > 0 ? (
-                              // setSearchPerformed(true),
-                              results
-                                .sort((a, b) => {
-                                  // Custom sorting function to place cards with case name "Not Available" at the bottom
-                                  const caseNameA = a[1].metadata["Case Name"] || '';
-                                  const caseNameB = b[1].metadata["Case Name"] || '';
-
-                                  // Compare case names
-                                  if (
-                                    (caseNameA === "Not Available" && caseNameB !== "Not Available") ||
-                                    (caseNameA === "" && caseNameB !== "") ||
-                                    (caseNameA === "Not found" && caseNameB !== "Not found") ||
-                                    (caseNameA === "Not mentioned" && caseNameB !== "Not mentioned")
-                                  ) {
-                                    return 1; // Place case name "Not Available" at the bottom
-                                  } else if (
-                                    (caseNameA !== "Not Available" && caseNameB === "Not Available") ||
-                                    (caseNameA !== "" && caseNameB === "") ||
-                                    (caseNameA !== "Not found" && caseNameB === "Not found") ||
-                                    (caseNameA !== "Not mentioned" && caseNameB === "Not mentioned")
-                                  ) {
-                                    return -1; // Place case name "Not Available" at the bottom
-                                  }
-
-                                  // Compare empty fields count
-                                  const getEmptyFieldsCount = (item) => {
-                                    let count = 0;
-                                    if (!item[1].metadata["Case Name"] || item[1].metadata["Case Name"] === "Not Available") count++;
-                                    if (!item[1].metadata["Case Summary"] || item[1].metadata["Case Summary"] === "Not Available") count++;
-                                    if (!item[1].metadata["Document Summary"] || item[1].metadata["Document Summary"] === "Not Available") count++;
-                                    if (!item[1].metadata["Case URL"]) count++;
-                                    if (!item[1].metadata["PDF URL"]) count++;
-                                    if (!item[1].metadata["URL"]) count++;
-                                    return count;
-                                  };
-
-                                  const emptyFieldsCountA = getEmptyFieldsCount(a);
-                                  const emptyFieldsCountB = getEmptyFieldsCount(b);
-
-                                  if (emptyFieldsCountA > emptyFieldsCountB) {
-                                    return 1; // Place item with more empty fields at the bottom
-                                  } else if (emptyFieldsCountA < emptyFieldsCountB) {
-                                    return -1; // Place item with fewer empty fields at the top
-                                  }
-
-                                  return 0; // Maintain original order if everything else is equal
-                                })
-                                .map((item, index) => (
-                                  <ResultCard
-                                    key={index}
-                                    item={item}
-                                    searchWords={keywo}
-                                    sortByCaseName={sortByCaseName}
-                                  />
-                                ))
-                            ) : (
-                              searchPerformed && <p>No cases found.</p>
-                            ))
-                          )}
-                          {!groupedResults && !results && (
                             searchPerformed && <p>No cases found.</p>
-                          )}
-                        </div>
-                      )}
-                    </div></div>
-                </div>
+                          ))
+                        )}
+                        {!groupedResults && !results && (
+                          searchPerformed && <p>No cases found.</p>
+                        )}
+                      </div>
+                    )}
+                  </div></div>
               </div>
-            )}
+            </div>
+          )}
 
 
-            {/* {results && (<div className="right-filters">
+          {/* {results && (<div className="right-filters">
               <div>
             {user ? (
               <div style={{ position: 'relative' }}>
@@ -1926,11 +1934,11 @@ const [searchQuery, setSearchQuery] = useState(null);
             {modalShow && <LoginModal show={modalShow} handleLogin={login} />}
           </div>
           </div>)} */}
-            {modalShow && <LoginModal show={modalShow} handleLogin={login} />}
-          </>
-        ) : (
-          <div className="parent-div">
-            {/* <div className="central-content">
+          {modalShow && <LoginModal show={modalShow} handleLogin={login} />}
+        </>
+      ) : (
+        <div className="parent-div">
+          {/* <div className="central-content">
         
         <div className="search-container">
           <h1>Human Rights Dossier</h1>
@@ -1976,209 +1984,209 @@ const [searchQuery, setSearchQuery] = useState(null);
           )}
         </div>
         </div> */}
-            <div className="search-results">
-              {loading ? (
-                <div className='spinner'>
+          <div className="search-results">
+            {loading ? (
+              <div className='spinner'>
 
-                  {/* <Lottie animationData={nopage} loop={true} renderer={'svg'} /> */}
-                  <ClipLoader size={150} color={"#123abc"} loading={loading} />
-                </div>
-                // <div className="loading-bar">
-                //   Loading...
-                // </div>
-              ) : (
-                <div>
-                  {/* <button onClick={toggleSortMode} className="toggle-button">
+                {/* <Lottie animationData={nopage} loop={true} renderer={'svg'} /> */}
+                <ClipLoader size={150} color={"#123abc"} loading={loading} />
+              </div>
+              // <div className="loading-bar">
+              //   Loading...
+              // </div>
+            ) : (
+              <div>
+                {/* <button onClick={toggleSortMode} className="toggle-button">
             {sortByDate ? 'Sort by Score' : 'Sort by Date'}
             </button>
             <button onClick={togglegroupedMode} className="toggle-button">
             {group ? "Normal" : 'Sort by group'}
             </button> */}
-                  <div>
-                    <div className="toggle">
-                      <div>
-                        <label className="switch-label">Sort by Date</label>
-                        <label className="switch">
-                          <input type="checkbox" checked={sortByDate} onChange={toggleSortMode} />
-                          <span className="slider round"></span>
-                        </label>
-                        {sortByDate && (
-                          <div>
-                            <button onClick={toggleSortDirection}>
-                              {sortDirection === "newer" ? "Newer to Older" : "Older to Newer"}
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                      <div>
-                        <label className="switch-label">Sort by Case Name</label>
-                        <label className="switch">
-                          <input type="checkbox" checked={sortByCaseName} onChange={toggleSortByCaseName} />
-                          <span className="slider round"></span>
-                        </label>
-                        {sortByCaseName && (
-                          <div>
-                            <button onClick={setOpenAccordion(true)}>
-                              {openAccordion ? "Expand All" : "Collapse All"}
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                      {/* <div>
+                <div>
+                  <div className="toggle">
+                    <div>
+                      <label className="switch-label">Sort by Date</label>
+                      <label className="switch">
+                        <input type="checkbox" checked={sortByDate} onChange={toggleSortMode} />
+                        <span className="slider round"></span>
+                      </label>
+                      {sortByDate && (
+                        <div>
+                          <button onClick={toggleSortDirection}>
+                            {sortDirection === "newer" ? "Newer to Older" : "Older to Newer"}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <label className="switch-label">Sort by Case Name</label>
+                      <label className="switch">
+                        <input type="checkbox" checked={sortByCaseName} onChange={toggleSortByCaseName} />
+                        <span className="slider round"></span>
+                      </label>
+                      {sortByCaseName && (
+                        <div>
+                          <button onClick={setOpenAccordion(true)}>
+                            {openAccordion ? "Expand All" : "Collapse All"}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {/* <div>
                   <label className="switch-label">Group by Score</label>
                   <label className="switch">
                     <input type="checkbox" checked={group} onChange={togglegroupedMode} />
                     <span className="slider round"></span>
                   </label>
                 </div>*/}
-                    </div></div>
+                  </div></div>
 
-                  {/* <Switch {...label} disabled defaultChecked >{sortByDate ? 'Sort by Score' : 'Sort by Date'}</Switch> */}
+                {/* <Switch {...label} disabled defaultChecked >{sortByDate ? 'Sort by Score' : 'Sort by Date'}</Switch> */}
 
-                  {sortByCaseName ? (
-                    Object.values(
-                      results.reduce((acc, item) => {
-                        // const caseName = item[1].metadata["Case Name"] || "Not Available";
-                        const caseName = (item[1].metadata["Case Name"] || "Not Available").replace(/\d+/g, '');
-                        if (!acc[caseName]) {
-                          acc[caseName] = {
-                            caseName,
-                            items: [],
-                            isOpen: true,
-                          };
-                        }
-                        acc[caseName].items.push(item);
-                        return acc;
-                      }, {})
-                    ).map((group, index) => (
-                      <div key={group.caseName} style={{ backgroundColor: index % 2 === 0 ? '#db9797' : '#bbcb7f', marginBottom: index !== group.length - 1 ? '10px' : '0' }}>
-                        <div className="accordion-header" onClick={() => toggleAccordion(group.caseName)} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
-                          <h4>{group.caseName}</h4>
-                          <span className="accordion-toggle" style={{ fontSize: '3.5em', padding: '5' }}>
-                            {openAccordion.includes(group.caseName) ? "-" : "+"}
-                          </span>
-                        </div>
-                        {openAccordion.includes(group.caseName) && (
-                          <div>
-                            {group.items
-                              .sort((a, b) => {
-                                if (sortByDate) {
-                                  const dateA = new Date(a[1].metadata.Date);
-                                  const dateB = new Date(b[1].metadata.Date);
-                                  return sortDirectionFactor * (dateB - dateA); // Apply the sort direction factor
-                                } else {
-                                  return 0; // No sorting if only sorting by case name
-                                }
-                              })
-                              .map((iitem, iindex) => (
-                                <div key={`${group.caseName}_${iindex}`} style={{ padding: '10px' }}>
-                                  <ResultCard
-                                    key={`${group.caseName}_${iindex}`}
-                                    item={iitem}
-                                    searchWords={keywo}
-                                    sortByCaseName={sortByCaseName}
-                                  />
-                                </div>
-                              ))}
-                          </div>
-                        )}
+                {sortByCaseName ? (
+                  Object.values(
+                    results.reduce((acc, item) => {
+                      // const caseName = item[1].metadata["Case Name"] || "Not Available";
+                      const caseName = (item[1].metadata["Case Name"] || "Not Available").replace(/\d+/g, '');
+                      if (!acc[caseName]) {
+                        acc[caseName] = {
+                          caseName,
+                          items: [],
+                          isOpen: true,
+                        };
+                      }
+                      acc[caseName].items.push(item);
+                      return acc;
+                    }, {})
+                  ).map((group, index) => (
+                    <div key={group.caseName} style={{ backgroundColor: index % 2 === 0 ? '#db9797' : '#bbcb7f', marginBottom: index !== group.length - 1 ? '10px' : '0' }}>
+                      <div className="accordion-header" onClick={() => toggleAccordion(group.caseName)} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                        <h4>{group.caseName}</h4>
+                        <span className="accordion-toggle" style={{ fontSize: '3.5em', padding: '5' }}>
+                          {openAccordion.includes(group.caseName) ? "-" : "+"}
+                        </span>
                       </div>
-                    ))
-                  ) : groupedResults ? (
-                    Object.keys(groupedResults)
-                      .sort((a, b) => parseInt(b) - parseInt(a))
-                      .map((scoreGroup) => (
-                        <div key={scoreGroup}>
-                          <p>Score: {scoreGroup}%</p>
-                          {groupedResults[scoreGroup]
+                      {openAccordion.includes(group.caseName) && (
+                        <div>
+                          {group.items
                             .sort((a, b) => {
-                              const dateA = new Date(a[1].metadata.Date);
-                              const dateB = new Date(b[1].metadata.Date);
-                              return dateB - dateA;
+                              if (sortByDate) {
+                                const dateA = new Date(a[1].metadata.Date);
+                                const dateB = new Date(b[1].metadata.Date);
+                                return sortDirectionFactor * (dateB - dateA); // Apply the sort direction factor
+                              } else {
+                                return 0; // No sorting if only sorting by case name
+                              }
                             })
-                            .map((item, index) => (
-                              // <ResultCard key={index} item={item} searchWords={keywo} />
-                              <ResultCard key={`${scoreGroup}_${index}`} item={item} searchWords={keywo} sortByCaseName={sortByCaseName} />
+                            .map((iitem, iindex) => (
+                              <div key={`${group.caseName}_${iindex}`} style={{ padding: '10px' }}>
+                                <ResultCard
+                                  key={`${group.caseName}_${iindex}`}
+                                  item={iitem}
+                                  searchWords={keywo}
+                                  sortByCaseName={sortByCaseName}
+                                />
+                              </div>
                             ))}
                         </div>
+                      )}
+                    </div>
+                  ))
+                ) : groupedResults ? (
+                  Object.keys(groupedResults)
+                    .sort((a, b) => parseInt(b) - parseInt(a))
+                    .map((scoreGroup) => (
+                      <div key={scoreGroup}>
+                        <p>Score: {scoreGroup}%</p>
+                        {groupedResults[scoreGroup]
+                          .sort((a, b) => {
+                            const dateA = new Date(a[1].metadata.Date);
+                            const dateB = new Date(b[1].metadata.Date);
+                            return dateB - dateA;
+                          })
+                          .map((item, index) => (
+                            // <ResultCard key={index} item={item} searchWords={keywo} />
+                            <ResultCard key={`${scoreGroup}_${index}`} item={item} searchWords={keywo} sortByCaseName={sortByCaseName} />
+                          ))}
+                      </div>
+                    ))
+                ) : (
+                  results &&
+                  (results.length > 0 ? (
+                    // setSearchPerformed(true),
+                    results
+                      .sort((a, b) => {
+                        // Custom sorting function to place cards with case name "Not Available" at the bottom
+                        const caseNameA = a[1].metadata["Case Name"] || '';
+                        const caseNameB = b[1].metadata["Case Name"] || '';
+
+                        // Compare case names
+                        if (
+                          (caseNameA === "Not Available" && caseNameB !== "Not Available") ||
+                          (caseNameA === "" && caseNameB !== "") ||
+                          (caseNameA === "Not found" && caseNameB !== "Not found") ||
+                          (caseNameA === "Not mentioned" && caseNameB !== "Not mentioned")
+                        ) {
+                          return 1; // Place case name "Not Available" at the bottom
+                        } else if (
+                          (caseNameA !== "Not Available" && caseNameB === "Not Available") ||
+                          (caseNameA !== "" && caseNameB === "") ||
+                          (caseNameA !== "Not found" && caseNameB === "Not found") ||
+                          (caseNameA !== "Not mentioned" && caseNameB === "Not mentioned")
+                        ) {
+                          return -1; // Place case name "Not Available" at the bottom
+                        }
+
+                        // Compare empty fields count
+                        const getEmptyFieldsCount = (item) => {
+                          let count = 0;
+                          if (!item[1].metadata["Case Name"] || item[1].metadata["Case Name"] === "Not Available") count++;
+                          if (!item[1].metadata["Case Summary"] || item[1].metadata["Case Summary"] === "Not Available") count++;
+                          if (!item[1].metadata["Document Summary"] || item[1].metadata["Document Summary"] === "Not Available") count++;
+                          if (!item[1].metadata["Case URL"]) count++;
+                          if (!item[1].metadata["PDF URL"]) count++;
+                          if (!item[1].metadata["URL"]) count++;
+                          return count;
+                        };
+
+                        const emptyFieldsCountA = getEmptyFieldsCount(a);
+                        const emptyFieldsCountB = getEmptyFieldsCount(b);
+
+                        if (emptyFieldsCountA > emptyFieldsCountB) {
+                          return 1; // Place item with more empty fields at the bottom
+                        } else if (emptyFieldsCountA < emptyFieldsCountB) {
+                          return -1; // Place item with fewer empty fields at the top
+                        }
+
+                        return 0; // Maintain original order if everything else is equal
+                      })
+                      .map((item, index) => (
+                        <ResultCard
+                          key={index}
+                          item={item}
+                          searchWords={keywo}
+                          sortByCaseName={sortByCaseName}
+                        />
                       ))
                   ) : (
-                    results &&
-                    (results.length > 0 ? (
-                      // setSearchPerformed(true),
-                      results
-                        .sort((a, b) => {
-                          // Custom sorting function to place cards with case name "Not Available" at the bottom
-                          const caseNameA = a[1].metadata["Case Name"] || '';
-                          const caseNameB = b[1].metadata["Case Name"] || '';
-
-                          // Compare case names
-                          if (
-                            (caseNameA === "Not Available" && caseNameB !== "Not Available") ||
-                            (caseNameA === "" && caseNameB !== "") ||
-                            (caseNameA === "Not found" && caseNameB !== "Not found") ||
-                            (caseNameA === "Not mentioned" && caseNameB !== "Not mentioned")
-                          ) {
-                            return 1; // Place case name "Not Available" at the bottom
-                          } else if (
-                            (caseNameA !== "Not Available" && caseNameB === "Not Available") ||
-                            (caseNameA !== "" && caseNameB === "") ||
-                            (caseNameA !== "Not found" && caseNameB === "Not found") ||
-                            (caseNameA !== "Not mentioned" && caseNameB === "Not mentioned")
-                          ) {
-                            return -1; // Place case name "Not Available" at the bottom
-                          }
-
-                          // Compare empty fields count
-                          const getEmptyFieldsCount = (item) => {
-                            let count = 0;
-                            if (!item[1].metadata["Case Name"] || item[1].metadata["Case Name"] === "Not Available") count++;
-                            if (!item[1].metadata["Case Summary"] || item[1].metadata["Case Summary"] === "Not Available") count++;
-                            if (!item[1].metadata["Document Summary"] || item[1].metadata["Document Summary"] === "Not Available") count++;
-                            if (!item[1].metadata["Case URL"]) count++;
-                            if (!item[1].metadata["PDF URL"]) count++;
-                            if (!item[1].metadata["URL"]) count++;
-                            return count;
-                          };
-
-                          const emptyFieldsCountA = getEmptyFieldsCount(a);
-                          const emptyFieldsCountB = getEmptyFieldsCount(b);
-
-                          if (emptyFieldsCountA > emptyFieldsCountB) {
-                            return 1; // Place item with more empty fields at the bottom
-                          } else if (emptyFieldsCountA < emptyFieldsCountB) {
-                            return -1; // Place item with fewer empty fields at the top
-                          }
-
-                          return 0; // Maintain original order if everything else is equal
-                        })
-                        .map((item, index) => (
-                          <ResultCard
-                            key={index}
-                            item={item}
-                            searchWords={keywo}
-                            sortByCaseName={sortByCaseName}
-                          />
-                        ))
-                    ) : (
-                      <p>
-                        No cases found.
-                      </p>
-                    ))
-                  )}
-                  {!groupedResults && !results && (
                     <p>
                       No cases found.
                     </p>
-                  )}
-                </div>
-              )}
-            </div>
+                  ))
+                )}
+                {!groupedResults && !results && (
+                  <p>
+                    No cases found.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
+        </div>
 
-        )}
+      )}
 
-      </div>
+    </div>
   )
 };
 export default Search_content;

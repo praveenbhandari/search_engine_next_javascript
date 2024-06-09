@@ -43,18 +43,18 @@ function RootLayout({ children }) {
       setUserid(userData.user_id);
     }
   }, []);
-  useEffect(() => {
-    // const userData = sessionStorage.getItem('user');
-    if (user) {
-      // setUser(JSON.parse(userData));
-      console.log(user)
-      sets_Name(user.name);
-      sets_Email(user.email);
-      sets_Phone(user.phone);
-      // sets_Location(user.location);
-      setUserid(user.user_id);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // const userData = sessionStorage.getItem('user');
+  //   if (user) {
+  //     // setUser(JSON.parse(userData));
+  //     console.log(user)
+  //     sets_Name(user.name);
+  //     sets_Email(user.email);
+  //     sets_Phone(user.phone);
+  //     // sets_Location(user.location);
+  //     setUserid(user.user_id);
+  //   }
+  // }, []);
   useEffect(() => {
     const fetchLocation = async () => {
       try {
@@ -82,7 +82,7 @@ function RootLayout({ children }) {
     } else {
       setShowSearchContent(false);
     }
-  }, [window.location.pathname]);
+  }, []);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);

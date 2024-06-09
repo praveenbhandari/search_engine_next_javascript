@@ -6,12 +6,12 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [showSearchContent, setShowSearchContent] = useState(true);
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (window.location.pathname === '/') {
       setShowSearchContent(true);
     } else {
       setShowSearchContent(false);
     }
-  }, [location.pathname]);
+  }, []);
 
   return (
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">

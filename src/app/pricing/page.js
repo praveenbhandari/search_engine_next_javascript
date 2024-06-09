@@ -29,7 +29,7 @@ function Pricing({ user, avatarRef, toggleDropdown, toggleCollapse, feedback_dat
           <li>Complete the payment process securely.</li>
           <li>Gain immediate access to our beta features and prepare for the official product launch.</li>
         </ol> */}
-            <p style={{ marginBottom: '20px' }}><strong>Limited Time Offer:</strong> Hurry, this special beta testing offer won't last forever! Sign up now to secure your spot and be among the first to experience our innovative platform at the official launch.</p>
+            <p style={{ marginBottom: '20px' }}><strong>Limited Time Offer:</strong> Hurry, this special beta testing offer won&apos;t last forever! Sign up now to secure your spot and be among the first to experience our innovative platform at the official launch.</p>
             <center>
               {/* {paymentLink === 'nil' ? (
                 <div>Loading...</div>
