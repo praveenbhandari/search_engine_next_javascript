@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://humanrightsdossier.com/sitemap.xml
