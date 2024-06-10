@@ -482,6 +482,7 @@ function Search_content(//{
                       </button>
                     )
                   ))
+                  
                 )}
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', height: '40px' }}>
