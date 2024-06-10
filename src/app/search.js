@@ -762,7 +762,7 @@ function Search_content(//{
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')) || null);
+  const [user, setUser] = useState(null);
 
   const [isVisible, setIsVisible] = useState(false);
 

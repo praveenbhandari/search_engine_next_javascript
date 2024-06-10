@@ -1,9 +1,10 @@
 "use client";
-import Image from "next/image";
+// import Image from "next/image";
 import Search_content from "./search";
 import { useState, useEffect } from "react";
+
 // import AppContextProvider from "./?";
-export default function Home() {
+const Home=() =>{
   const [showSearchContent, setShowSearchContent] = useState(true);
   useEffect(() => {
     if (window.location.pathname === '/') {
@@ -23,3 +24,4 @@ export default function Home() {
     // </main>
   );
 }
+export default Home;
