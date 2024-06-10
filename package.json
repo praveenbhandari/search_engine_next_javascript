@@ -1,5 +1,5 @@
 {
-  "name": "search_engine_next_javascript",
+  "name": "Human Rights Dossier",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "axios": "^1.7.2",
     "country-telephone-data": "^0.6.3",
     "next": "14.2.3",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-focus-on": "^3.9.3",
@@ -23,6 +24,7 @@
     "sitemap": "^8.0.0"
   },
   "devDependencies": {
+    "@types/react": "18.3.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",

@@ -77,26 +77,7 @@ function Search_content(//{
   //   const [isLoggedIn, setIsLoggedIn] = useState(true);
   // // v
   // const [searchQuery, setSearchQuery] = useState(null);
-  const [searchCount, setSearchCount] = useState(0);
 
-  // Load the search count from localStorage on component mount
-  useEffect(() => {
-    const storedSearchCount = localStorage.getItem('searchCount');
-    if (storedSearchCount) {
-      setSearchCount(parseInt(storedSearchCount));
-    }
-  }, []);
-
-  // Save the search count to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('searchCount', searchCount.toString());
-  }, [searchCount]);
-
-const handleClick = () => {
-
-  setSearchCount(searchCount + 1);
-  console.log("click",searchCount)
-};
   function formatDate(dateString) {
     if (!dateString || isNaN(Date.parse(dateString))) {
       return dateString;
@@ -500,7 +481,7 @@ const handleClick = () => {
                         />
                       </button>
                     )
-                  ))  
+                  ))
 
                 )}
               </div>
@@ -694,7 +675,26 @@ const handleClick = () => {
 
     );
   }
+  const [clickCount, setClickCount] = useState(0);
 
+  useEffect(() => {
+    // Load the click count from localStorage on component mount
+    const storedClickCount = localStorage.getItem('clickCount');
+    if (storedClickCount) {
+      setClickCount(parseInt(storedClickCount));
+      console.log("click :",storedClickCount)
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save the click count to localStorage whenever it changes
+    localStorage.setItem('clickCount', clickCount.toString());
+  }, [clickCount]);
+
+  const handleClick = () => {
+    console.log("click :",clickCount)
+    setClickCount(clickCount + 1);
+  };
   // DocumentModal.propTypes = {
   //   content: PropTypes.string.isRequired,
   //   onClose: PropTypes.func.isRequired,
@@ -775,7 +775,7 @@ const handleClick = () => {
 
   const [sortDirection, setSortDirection] = useState("newer"); // Default to newer
 
-  // const [searchCount, setSearchCount] = useState(0);
+  const [searchCount, setSearchCount] = useState(0);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [location, setLocation] = useState("");
   const [ip, setIp] = useState("");
@@ -1103,92 +1103,83 @@ const handleClick = () => {
   // const MAX_FREE_SEARCHES = 5;
 
   const handleSearch = async () => {
-    
-    if(searchCount>2){
-
-       if (user == null) {
-      setModalShow(true)
-    }
-    // else if (user != null) {
-      setLoading(true);
-      try {
-        // const response = await axios.post('http://3.108.219.46/search', {
-        console.log({ user_id: s_user_id, query: searchQuery, ip: ip, location: location })
-        const response = await axios.post(backend_url + '/search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
-        // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
-        setLoading(true);
-        setSearchPerformed(true)
-        // s
-        ReactGA.event({
-          category: 'User',
-          action: 'searched for ' + searchQuery
-        });
-        // console.log("session :", s_name, s_email, s_phone, s_location);
-        // console.log(response.data);
-        // console.log("---------------------------");
-        setResults(response.data[0]);
-        setOriginalResults(response.data[0]); // Store the original results
-        setkeywo(response.data[1]);
-        if (results) {
-          extractUniqueMonths(results);
-          extractUniqueYears(results);
-          extractUniqueCourts(results);
-          extractUniqueParties(results);
-          extractUniqueJudges(results);
-          extractUniqueDocumentTypes(results);
-          extractUniqueKeywords(results);
-
-        }
-
-      } catch (error) {
-        setResults(null);
-        setOriginalResults(null); // Reset original results
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    // }
-    }
-    if(searchCount <2){
-      setLoading(true);
-      try {
-        // const response = await axios.post('http://3.108.219.46/search', {
-        console.log({ user_id: "9999999", query: searchQuery, ip: ip, location: location })
-        const response = await axios.post(backend_url + '/search', { user_id: "9999999", query: searchQuery, ip: ip, location: location });
-        // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
-        setLoading(true);
-        setSearchPerformed(true)
-        // s
-        ReactGA.event({
-          category: 'User',
-          action: 'searched for ' + searchQuery
-        });
-        // console.log("session :", s_name, s_email, s_phone, s_location);
-        // console.log(response.data);
-        // console.log("---------------------------");
-        setResults(response.data[0]);
-        setOriginalResults(response.data[0]); // Store the original results
-        setkeywo(response.data[1]);
-        if (results) {
-          extractUniqueMonths(results);
-          extractUniqueYears(results);
-          extractUniqueCourts(results);
-          extractUniqueParties(results);
-          extractUniqueJudges(results);
-          extractUniqueDocumentTypes(results);
-          extractUniqueKeywords(results);
-
-        }
-
-      } catch (error) {
-        setResults(null);
-        setOriginalResults(null); // Reset original results
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    }
+    console.log("cliky click :",click)
     handleClick()
+    if (clickCount >= 2) {
+      if (user == null) {
+
+        setModalShow(true)
+      }
+      else if (user != null) {
+        // setSelectedMonth(results);
+        // setSelectedYear(results);
+        // setSelectedParty(results);
+        // setSelectedCourt(results);
+        // setSelectedJudge(results);
+        // setSelectedDocumentType(results);
+        // setSelectedKeyword(results);
+
+        // Uncomment if need this function 
+        // Check if the user has exceeded the allowed number of searches
+        //  if (searchCount >= MAX_FREE_SEARCHES) {
+        // //   // Open the login modal
+        //   setShowLoginModal(true);
+        //   return;
+        // }
+
+        setLoading(true);
+
+        // Increment the search count
+        // setSearchCount(prevCount => prevCount + 1);
+
+        // Initialize the RemoteRunnable with your LangChain API endpoint
+        // const chain = new RemoteRunnable({
+        //   // url: `https://de7e-110-226-176-227.ngrok-free.app/chat`, // Replace with your actual API endpoint http://localhost:8081/chat
+        //   // url: `https://yantra-api-gcp-image-fxhbdhovha-el.a.run.app/chat`
+        //   // url: `https://search-engine.lawyantra.com/chat`
+        //   url: `http://localhost:8000/chat`
+        // });
+
+        try {
+          // const response = await axios.post('http://3.108.219.46/search', {
+          console.log({ user_id: s_user_id, query: searchQuery, ip: ip, location: location })
+          const response = await axios.post(backend_url + '/search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
+          // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
+          setLoading(true);
+          setSearchPerformed(true)
+          // s
+          ReactGA.event({
+            category: 'User',
+            action: 'searched for ' + searchQuery
+          });
+          // console.log("session :", s_name, s_email, s_phone, s_location);
+          // console.log(response.data);
+          // console.log("---------------------------");
+          setResults(response.data[0]);
+          setOriginalResults(response.data[0]); // Store the original results
+          setkeywo(response.data[1]);
+          if (results) {
+            extractUniqueMonths(results);
+            extractUniqueYears(results);
+            extractUniqueCourts(results);
+            extractUniqueParties(results);
+            extractUniqueJudges(results);
+            extractUniqueDocumentTypes(results);
+            extractUniqueKeywords(results);
+
+          }
+
+        } catch (error) {
+          setResults(null);
+          setOriginalResults(null); // Reset original results
+          console.error("Error fetching data: ", error);
+        } finally {
+          setLoading(false); // Stop loading
+
+          // const resultsData = response.data[0]; // Assuming data structure matches your results
+        }
+      }
+    }
   };
 
   // const handleLoginSuccess = () => {
@@ -1363,8 +1354,13 @@ const handleClick = () => {
       extractUniqueDocumentTypes(results);
       extractUniqueKeywords(results);
     }
-  }, [results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
-    
+  }, [
+    results,
+    extractUniqueCourts,
+    extractUniqueDocumentTypes,
+    extractUniqueJudges,
+    extractUniqueKeywords,
+    extractUniqueParties,
   ]);
 
   const handleKeyDown = (event) => {

@@ -1,5 +1,5 @@
 "use client";
-import { Inter } from "next/font/google";
+import { Inter } from "next/font/";
 import "./globals.css";
 import Header from "./header";
 import { useState,useEffect } from "react";

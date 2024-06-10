@@ -10,6 +10,7 @@ import ReactGA from 'react-ga4';
 ReactGA.initialize('G-CBKKVT259T');
 import Link from "next/link";
 import Image from "next/image";
+
 const Header = () => {
     // const router = useRouter();
 
@@ -90,9 +91,9 @@ const Header = () => {
             action: 'User Logged out'
         });
 
-        <Link href="/home" passHref>
-            <a className="relative" onClick={() => handlePageChange("/home")}>About Us</a>
-        </Link>// setModalShow(true)
+        // <Link href="/home" passHref>
+        //     <a className="relative" onClick={() => handlePageChange("/home")}>About Us</a>
+        // </Link>// setModalShow(true)
         // setUser(true)
     };
 
@@ -256,6 +257,7 @@ const Header = () => {
                                                 onClick={logoutUser}
                                                 className=" px-2 py-1 flex items-center justify-between border rounded-b-lg bg-red-600 focus:outline-none hover:bg-red-700 text-white w-full"
                                             //  style={{ padding: '0', borderRadius: '0 0 10px 10px' }}
+                                            href="/home"
                                             >
                                                 Logout
                                                 <div >
@@ -272,6 +274,7 @@ const Header = () => {
                                 )}
                             </div>
                         ) : (
+                            
                             <button
                                 onClick={handleModalOpen}
                                 className="inline-flex items-center bg-[#343434] border-0 py-1 px-3 focus:outline-none hover:bg-green-700 rounded text-white mt-4 md:mt-0"
