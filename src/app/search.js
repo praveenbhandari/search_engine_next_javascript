@@ -720,7 +720,7 @@ function Search_content(//{
     // Keywords: PropTypes.arrayOf(PropTypes.string), 
     // })
   };
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   // const [searchQuery, setSearchQuery] = useState("");
   // const [filters, setFilters] = useState({
   // icj: false,
