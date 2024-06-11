@@ -17,7 +17,7 @@ import { FocusOn } from 'react-focus-on';
 // import PrivacyPolicy from "./privacy";
 // import Pricing from "./Pricing";
 // import Lottie from "lottie-react";
-import { ResultsContext } from "./resultContext";
+import { ResultsContext, useResults } from "./resultContext";
 import Image from 'next/image'
 import nopage from "./lottie/nopg.json";
 
@@ -795,7 +795,9 @@ function Search_content(//{
   const [feedback_data, setFeedback_data] = useState(null);
   // const { results, setResults,user, setUser } = useContext(ResultsContext);
 
-  const [results, setResults] = useState(null);
+  // let [results, setResults] = useState(null);
+
+  const { results, setResults } = useResults();
   // const { user, setUser } = useState(null);
 
   const handleModalOpen = () => setModalShow(true);

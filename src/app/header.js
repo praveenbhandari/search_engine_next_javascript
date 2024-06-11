@@ -10,11 +10,14 @@ import ReactGA from 'react-ga4';
 ReactGA.initialize('G-CBKKVT259T');
 import Link from "next/link";
 import Image from "next/image";
+import { useResults } from "./resultContext";
+
 
 const Header = () => {
     // const router = useRouter();
-
-    const [results, setResults] = useState(null)
+// useResults
+const { results, setResults } = useResults();
+    // const [results, setResults] = useState(null)
 
     const [user, setUser] = useState(null)
     // 
@@ -27,7 +30,7 @@ const Header = () => {
     const [s_name, sets_Name] = useState('');
     const [s_email, sets_Email] = useState('');
     const [s_phone, sets_Phone] = useState('');
-    const [s_location, sets_Location] = useState('location');
+    const [s_location, sets_Location] = useState('location'); 
     const [s_user_id, setUserid] = useState();
     const [feedback_data, setFeedback_data] = useState(null);
 

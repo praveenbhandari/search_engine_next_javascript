@@ -1,15 +1,21 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 
-export const ResultsContext = createContext();
+const ResultsContext = createContext();
 
 export const ResultsProvider = ({ children }) => {
   const [results, setResults] = useState(null);
-  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')) || null);
-
 
   return (
-    <ResultsContext.Provider value={{ results, setResults, user, setUser }}>
-    {children}
-  </ResultsContext.Provider>
+    <ResultsContext.Provider value={{ results, setResults }}>
+      {children}
+    </ResultsContext.Provider>
   );
+};
+
+export const useResults = () => {
+  const context = useContext(ResultsContext);
+  if (context === undefined) {
+    throw new Error("useResults must be used within a ResultsProvider");
+  }
+  return context;
 };
