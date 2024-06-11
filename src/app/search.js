@@ -1100,6 +1100,11 @@ function Search_content(//{
   // initialize maximum free searches
   // const MAX_FREE_SEARCHES = 5;
 
+  const handleClick = () => {
+
+    setSearchCount(searchCount + 1);
+    console.log("click", searchCount)
+  };
   const handleSearch = async () => {
 
     if (searchCount > 2) {
