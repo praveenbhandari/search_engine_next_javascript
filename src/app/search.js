@@ -1111,7 +1111,7 @@ function Search_content(//{
 
     if (searchCount > 2) {
       if(!user){
-      toast.warn(`Please Signup for more searches`, { // Display a notification with the updated search count
+      toast(`Please Signup for more searches`, { // Display a notification with the updated search count
         position: "top-center",
         autoClose: 15000,
         hideProgressBar: false,
