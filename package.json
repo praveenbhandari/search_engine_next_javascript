@@ -10,7 +10,6 @@
     "generate-sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
-    "@next/font": "^14.2.3",
     "axios": "^1.7.2",
     "country-telephone-data": "^0.6.3",
     "next": "^14.2.3",

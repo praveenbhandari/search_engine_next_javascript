@@ -1,12 +1,12 @@
 "use client";
-import { Inter } from "next/font";
+// import { Inter } from "next/font";
 // import Inter
 import "./globals.css";
 import Header from "./header";
 import { useState,useEffect } from "react";
 import axios from "axios";
 import  FeedbackIcon  from './feedback.png';
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 import Image from "next/image";
 // export const metadata = {
 //   title: "Create Next App",
@@ -120,7 +120,7 @@ function RootLayout({ children }) {
   return (
     <html lang="en">
     
-      <body className={inter.className}>
+      <body >
         <Header />
         <div style={{paddingTop:'70px'}}>
 

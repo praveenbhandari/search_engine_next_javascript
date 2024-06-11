@@ -28,7 +28,7 @@ const AboutUs = () => {
             </div> <div>
                 <h2 style={{ fontSize: '20px', marginBottom: '5px',fontWeight:'bold',paddingTop:'30px' }}>Address</h2>
                 <p>EMPIRILEX PRIVATE LIMITED, 904, C-Wing,</p>
-                <p>Trace Center, Kamala Mills</p>
+                <p>Trace World, Kamala Mills</p>
                 <p>Lower Parel, Mumbai - 400013</p>
               </div>
             <div>
