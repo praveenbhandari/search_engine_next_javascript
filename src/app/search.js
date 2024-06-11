@@ -1123,8 +1123,10 @@ function Search_content(//{
     }
       if (user == null) {
         setModalShow(true)
+
       }
       // else if (user != null) {
+        else{
       setLoading(true);
       try {
         // const response = await axios.post('http://3.108.219.46/search', {
@@ -1162,7 +1164,7 @@ function Search_content(//{
       } finally {
         setLoading(false); // Stop loading
       }
-      // }
+      }
     }
     if (searchCount < 2) {
       
