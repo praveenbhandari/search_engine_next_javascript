@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^1.7.2",
     "country-telephone-data": "^0.6.3",
+    "lottie": "^0.0.1",
+    "lottie-react": "^2.4.0",
     "next": "^14.2.3",
     "next-auth": "^4.24.7",
     "react": "^18",
@@ -21,6 +23,7 @@
     "react-highlight-words": "^0.20.0",
     "react-spinner": "^0.2.7",
     "react-spinners": "^0.13.8",
+    "react-toastify": "^10.0.5",
     "sharp": "^0.33.4",
     "sitemap": "^8.0.0"
   },

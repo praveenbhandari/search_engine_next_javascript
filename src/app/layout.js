@@ -78,11 +78,12 @@ function RootLayout({ children }) {
 
   }, []);
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     if (window.location.pathname === '/') {
       setShowSearchContent(true);
     } else {
       setShowSearchContent(false);
-    }
+    }}
   }, []);
 
   const toggleCollapse = () => {

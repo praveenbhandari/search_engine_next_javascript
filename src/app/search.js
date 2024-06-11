@@ -19,7 +19,10 @@ import { FocusOn } from 'react-focus-on';
 // import Lottie from "lottie-react";
 import { ResultsContext } from "./resultContext";
 import Image from 'next/image'
-// import nopage from "./lottie/nopg.json";
+import nopage from "./lottie/nopg.json";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import DesktopViewPrompt from './Desktopprompt';
 function Search_content(//{
@@ -79,24 +82,19 @@ function Search_content(//{
   // const [searchQuery, setSearchQuery] = useState(null);
   const [searchCount, setSearchCount] = useState(0);
 
-  // Load the search count from localStorage on component mount
   useEffect(() => {
+    // Retrieve searchCount from localStorage on component mount
     const storedSearchCount = localStorage.getItem('searchCount');
-    if (storedSearchCount) {
-      setSearchCount(parseInt(storedSearchCount));
+    if (storedSearchCount !== null) {
+      setSearchCount(parseInt(storedSearchCount, 10));
     }
   }, []);
 
-  // Save the search count to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('searchCount', searchCount.toString());
+    // Update localStorage whenever searchCount changes
+    localStorage.setItem('searchCount', searchCount);
   }, [searchCount]);
 
-const handleClick = () => {
-
-  setSearchCount(searchCount + 1);
-  console.log("click",searchCount)
-};
   function formatDate(dateString) {
     if (!dateString || isNaN(Date.parse(dateString))) {
       return dateString;
@@ -500,7 +498,7 @@ const handleClick = () => {
                         />
                       </button>
                     )
-                  ))  
+                  ))
 
                 )}
               </div>
@@ -1103,13 +1101,25 @@ const handleClick = () => {
   // const MAX_FREE_SEARCHES = 5;
 
   const handleSearch = async () => {
-    
-    if(searchCount>2){
 
-       if (user == null) {
-      setModalShow(true)
+    if (searchCount > 2) {
+      if(!user){
+      toast.warn(`Please Signup for more searches`, { // Display a notification with the updated search count
+        position: "top-center",
+        autoClose: 15000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        // transition: Bounce,
+      });
     }
-    // else if (user != null) {
+      if (user == null) {
+        setModalShow(true)
+      }
+      // else if (user != null) {
       setLoading(true);
       try {
         // const response = await axios.post('http://3.108.219.46/search', {
@@ -1147,9 +1157,10 @@ const handleClick = () => {
       } finally {
         setLoading(false); // Stop loading
       }
-    // }
+      // }
     }
-    if(searchCount <2){
+    if (searchCount < 2) {
+      
       setLoading(true);
       try {
         // const response = await axios.post('http://3.108.219.46/search', {
@@ -1179,7 +1190,16 @@ const handleClick = () => {
           extractUniqueKeywords(results);
 
         }
-
+        // toast.warn(`Free Searches: ${2-searchCount + 1}`, { // Display a notification with the updated search count
+        //   position: "bottom-left",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "dark",
+        // });
       } catch (error) {
         setResults(null);
         setOriginalResults(null); // Reset original results
@@ -1353,7 +1373,7 @@ const handleClick = () => {
   };
 
   useEffect(() => {
-    console.log(results);
+    // console.log(results);
     if (results) {
       extractUniqueMonths(results);
       extractUniqueYears(results);
@@ -1363,8 +1383,9 @@ const handleClick = () => {
       extractUniqueDocumentTypes(results);
       extractUniqueKeywords(results);
     }
-  }, [results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
-    
+  }, [
+    // results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
+
   ]);
 
   const handleKeyDown = (event) => {
@@ -1455,6 +1476,7 @@ const handleClick = () => {
   // };
   return (
     <div className="main-container">
+      <ToastContainer />
       {isLoggedIn ? (
         <>
           {!results && (<div className="full-page-container">
@@ -1702,6 +1724,7 @@ const handleClick = () => {
               </div>
 
               <div className="central-content">
+              
                 {!results && <center>
                   <div style={{ paddingTop: "140px" }}>
                     <Image src={imag} alt="My Image" style={{ width: '221px', height: '102p' }} />

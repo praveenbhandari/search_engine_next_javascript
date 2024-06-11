@@ -17,7 +17,7 @@ const Header = () => {
     const [results, setResults] = useState(null)
 
     const [user, setUser] = useState(null)
-// 
+    // 
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -188,16 +188,19 @@ const Header = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [dropdownOpen]);
-    const [page, setPage] = useState(null);
+    const [page, setPage] = useState('some');
 
 
     // const router = useRouter();
 
-    // useEffect(() => {
-    //     if (router.pathname !== '/') {
-    //         setPage("some");
-    //     }
-    // }, [router.pathname]);
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            
+                if (window.location.pathname !== '/') {
+                    setPage("some");
+                }
+            }
+        }, []);
 
     return (
         <div>
@@ -205,7 +208,7 @@ const Header = () => {
                 <div className="mx-auto flex flex-wrap p-2 flex-col md:flex-row items-center justify-between" style={{ zIndex: 9999 }}>
                     {/* Logo */}
 
-                    {(results !== null || page !== "some") && (
+                    {(page !== "some") && (
                         <div className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                             <Image src={imag} alt="My Image" style={{ width: 'auto', height: '48px' }} onClick={() => { setPage("some"); setResults(null); window.location.href = "/"; }} />
                         </div>
@@ -213,9 +216,11 @@ const Header = () => {
 
 
                     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-gray-700 flex flex-wrap items-center text-base justify-between w-3/5">
-                        <Link href="/" legacyBehavior>
-                            <a className="relative" onClick={() => setPage("some")}>Home</a>
-                        </Link>
+                        {(page !== "some") && (
+                            <Link href="/" legacyBehavior>
+                                <a className="relative" onClick={() => setPage("some")}>Home</a>
+                            </Link>
+                        )}
                         <Link href="/about-us" legacyBehavior>
                             <a className="relative" onClick={() => setPage("about-us")}>About Us</a>
                         </Link>
@@ -256,8 +261,8 @@ const Header = () => {
                                             <button
                                                 onClick={logoutUser}
                                                 className=" px-2 py-1 flex items-center justify-between border rounded-b-lg bg-red-600 focus:outline-none hover:bg-red-700 text-white w-full"
-                                            //  style={{ padding: '0', borderRadius: '0 0 10px 10px' }}
-                                            href="/home"
+                                                //  style={{ padding: '0', borderRadius: '0 0 10px 10px' }}
+                                                href="/home"
                                             >
                                                 Logout
                                                 <div >
@@ -274,7 +279,7 @@ const Header = () => {
                                 )}
                             </div>
                         ) : (
-                            
+
                             <button
                                 onClick={handleModalOpen}
                                 className="inline-flex items-center bg-[#343434] border-0 py-1 px-3 focus:outline-none hover:bg-green-700 rounded text-white mt-4 md:mt-0"

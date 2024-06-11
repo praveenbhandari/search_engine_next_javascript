@@ -7,11 +7,13 @@ import { useState, useEffect } from "react";
 const Home=() =>{
   const [showSearchContent, setShowSearchContent] = useState(true);
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     if (window.location.pathname === '/') {
       setShowSearchContent(true);
     } else {
       setShowSearchContent(false);
     }
+  }
   }, []);
 
   return (
