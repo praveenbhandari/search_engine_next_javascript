@@ -35,6 +35,60 @@ nav p:not(:last-child)::after {
   height: 1.5rem; /* Divider height */
   background-color: #D1D5DB; /* Tailwind gray-300 */
 }
+/* styles/globals.css */
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+}
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+.google-btn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.google-btn:hover {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.google-btn span {
+  display: inline-block;
+  vertical-align: middle;
+}
 
 .accordion-item.even .accordion-header {
   

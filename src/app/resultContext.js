@@ -1,12 +1,14 @@
+"use client";
 import { createContext, useState, useContext } from 'react';
 
 const ResultsContext = createContext();
 
 export const ResultsProvider = ({ children }) => {
   const [results, setResults] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
-    <ResultsContext.Provider value={{ results, setResults }}>
+    <ResultsContext.Provider value={{ results, setResults,user,setUser }}>
       {children}
     </ResultsContext.Provider>
   );

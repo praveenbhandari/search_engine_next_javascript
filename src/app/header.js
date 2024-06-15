@@ -11,16 +11,26 @@ ReactGA.initialize('G-CBKKVT259T');
 import Link from "next/link";
 import Image from "next/image";
 import { useResults } from "./resultContext";
+import { auth } from "@/auth";
 
-
+import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { doLogout } from "./actions";
+import axios from "axios";
+// doLogout
+// signOut
+// axios
 const Header = () => {
+
+
     // const router = useRouter();
-// useResults
-const { results, setResults } = useResults();
+    // useResults
+    const { results, setResults } = useResults();
     // const [results, setResults] = useState(null)
 
     const [user, setUser] = useState(null)
     // 
+    const { data: session, status } = useSession();
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -30,7 +40,7 @@ const { results, setResults } = useResults();
     const [s_name, sets_Name] = useState('');
     const [s_email, sets_Email] = useState('');
     const [s_phone, sets_Phone] = useState('');
-    const [s_location, sets_Location] = useState('location'); 
+    const [s_location, sets_Location] = useState('location');
     const [s_user_id, setUserid] = useState();
     const [feedback_data, setFeedback_data] = useState(null);
 
@@ -45,6 +55,8 @@ const { results, setResults } = useResults();
 
     useEffect(() => {
         const userData = sessionStorage.getItem('user');
+
+        // if (!session?.user) redirect("/");
         if (userData) {
             setModalShow(false)
             setUser(JSON.parse(userData));
@@ -86,6 +98,10 @@ const { results, setResults } = useResults();
     };
 
     const logoutUser = () => {
+
+        signOut({ redirectTo: "/" })
+
+
         sessionStorage.clear();
         setUser(null);
         setResults(null)
@@ -134,6 +150,37 @@ const { results, setResults } = useResults();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        async function checkSession() {
+          if (status === "authenticated" && session?.user) {
+            setUser(session.user); // Set the user in context
+            console.log("User authenticated:", session.user);
+    
+            try {
+              const response = await axios.post(backend_url + '/login', {
+                name: session.user.name,
+                email: session.user.email,
+                phone: "",
+                location: "google sign in"
+              });
+              console.log("Login response:", response.data.message);
+              console.log("User details:", session.user.name, session.user.email, "", "google");
+            //   console.log("Session Storage Set:",  session.user);
+              sessionStorage.setItem('user',JSON.stringify({user_id:response.data.message, name: session.user.name, email: session.user.email, phone: "", location: "google signup" }));
+        
+            // sessionStorage.setItem('user', JSON.stringify(session.user.name, session.user.email ));
+            } catch (error) {
+              console.error("Failed to log in:", error);
+            }
+          } else if (status === "unauthenticated") {
+            console.error("Unauthorized");
+            // Optionally, handle unauthorized access, e.g., redirect to login
+          }
+        }
+    
+        checkSession();
+      }, [session, status, setUser]);
+    
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
@@ -198,20 +245,21 @@ const { results, setResults } = useResults();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            
-                if (window.location.pathname !== '/') {
-                    setPage("some");
-                }
+
+            if (window.location.pathname !== '/') {
+                setPage("some");
             }
-        }, []);
+        }
+    }, []);
 
     return (
+
         <div>
             <header className="text-gray-400 bg-#EBEBEB body-font" style={{ position: 'fixed', width: '100%', justifyContent: 'space-between', padding: '0 20px', backgroundColor: '#ebebeb', zIndex: 9999 }}>
                 <div className="mx-auto flex flex-wrap p-2 flex-col md:flex-row items-center justify-between" style={{ zIndex: 9999 }}>
                     {/* Logo */}
 
-                    {(page !== "some") && (
+                    {(page !== "some" || results && results.length > 0) && (
                         <div className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                             <Image src={imag} alt="My Image" style={{ width: 'auto', height: '48px' }} onClick={() => { setPage("some"); setResults(null); window.location.href = "/"; }} />
                         </div>
@@ -219,7 +267,7 @@ const { results, setResults } = useResults();
 
 
                     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-gray-700 flex flex-wrap items-center text-base justify-between w-3/5">
-                        {(page !== "some") && (
+                    {(page !== "some" || results && results.length > 0) && (
                             <Link href="/" legacyBehavior>
                                 <a className="relative" onClick={() => setPage("some")}>Home</a>
                             </Link>

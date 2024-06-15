@@ -24,6 +24,7 @@ import nopage from "./lottie/nopg.json";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { signOut, useSession } from "next-auth/react";
 // import DesktopViewPrompt from './Desktopprompt';
 function Search_content(//{
   // //   searchPerformed,
@@ -131,37 +132,37 @@ function Search_content(//{
       : metadata["Parties Involved"];
     // console.log(searchWords)
 
-    const handleChange = (event) => {
+    // const handleChange = (event) => {
 
-      const url = event.target.value;
-      const get = backend_url + `/get_index/${url}`
-      // const get = `https://search-engine.lawyantra.com/get_index/${url}`
+    //   const url = event.target.value;
+    //   const get = backend_url + `/get_index/${url}`
+    //   // const get = `https://search-engine.lawyantra.com/get_index/${url}`
 
 
-      // console.log(url)
-      // console.log(get)
-      // useEffect(() => {
-      // Replace 'your-api-url' with the actual API URL you want to call
-      axios.get(get)
-        .then((response) => {
-          setData(response.data);
-          set1ModalOpen(true)
-          // console.log(response.data)
-        })
-      // .catch((error) => {
-      // setError(error); // Handle error
-      // })
-      // .finally(() => {
-      // setLoading(false); // Always executed
-      // });
-      // }, []); 
+    //   // console.log(url)
+    //   // console.log(get)
+    //   // useEffect(() => {
+    //   // Replace 'your-api-url' with the actual API URL you want to call
+    //   axios.get(get)
+    //     .then((response) => {
+    //       setData(response.data);
+    //       set1ModalOpen(true)
+    //       // console.log(response.data)
+    //     })
+    //   // .catch((error) => {
+    //   // setError(error); // Handle error
+    //   // })
+    //   // .finally(() => {
+    //   // setLoading(false); // Always executed
+    //   // });
+    //   // }, []); 
 
-      // setSelectedReference(url);
-      // if (url) {
-      // // Open the selected reference in a new tab
-      // window.open(url, '_blank', 'noopener,noreferrer');
-      // }
-    };
+    //   // setSelectedReference(url);
+    //   // if (url) {
+    //   // // Open the selected reference in a new tab
+    //   // window.open(url, '_blank', 'noopener,noreferrer');
+    //   // }
+    // };
 
 
     // function highlightText(text, wordsToHighlight) {
@@ -177,7 +178,7 @@ function Search_content(//{
     // console.log(score)
     // console.log(searchWords)
     // const searchRegex = new RegExp("\\b(" + searchWords.join("|") + ")\\b", "gi");
-    const searchRegexes = searchWords.map(word => new RegExp(`\\b${word}\\b`, "gi"));
+    const searchRegexes = searchWords?.map(word => new RegExp(`\\b${word}\\b`, "gi"));
     // console.log(searchRegexes)
     const [firstword, ...others] = searchRegexes;
     // Check if both case summary and document summary are "Not found"
@@ -927,7 +928,7 @@ function Search_content(//{
   useEffect(() => {
 
     const user = JSON.parse(sessionStorage.getItem('user'));
-    // console.log("usseerrrr: ", user);
+    console.log("usseerrrr: ", user);
     if (user) {
       sets_Name(user.name)
       sets_Email(user.email)
@@ -1102,123 +1103,204 @@ function Search_content(//{
   // initialize maximum free searches
   // const MAX_FREE_SEARCHES = 5;
 
+  const { data: session, status } = useSession();
+
+
+  useEffect(() => {
+    async function checkSession() {
+      if (status === "authenticated" && session?.user) {
+        setUser(session.user); // Set the user in context
+        console.log("User authenticated:", session.user);
+
+        try {
+          const response = await axios.post(backend_url + '/login', {
+            name: session.user.name,
+            email: session.user.email,
+            phone: "",
+            location: "google sign in"
+          });
+          setUserid(response.data.message)
+          console.log("Login response:", response.data.message);
+          console.log("User details:", session.user.name, session.user.email, "", "google");
+        //   console.log("Session Storage Set:",  session.user);
+          sessionStorage.setItem('user',JSON.stringify({user_id:response.data.message, name: session.user.name, email: session.user.email, phone: "", location: "google signup" }));
+    
+        // sessionStorage.setItem('user', JSON.stringify(session.user.name, session.user.email ));
+        } catch (error) {
+          console.error("Failed to log in:", error);
+        }
+      } else if (status === "unauthenticated") {
+        console.error("Unauthorized");
+        // Optionally, handle unauthorized access, e.g., redirect to login
+      }
+    }
+
+    checkSession();
+  }, [session, status, setUser]);
+
+
   const handleClick = () => {
 
     setSearchCount(searchCount + 1);
-    console.log("click", searchCount)
+    console.log("click", searchCount, user)
   };
   const handleSearch = async () => {
-
-    if (searchCount > 2) {
-      if(!user){
-      toast(`🦄 Please Signup for more free searches`, { // Display a notification with the updated search count
-        position: "top-center",
-        autoClose: 15000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        // transition: Bounce,
-      });
-    }
-      if (user == null) {
-        setModalShow(true)
-
-      }
-      // else if (user != null) {
-        else{
-      setLoading(true);
-      try {
-        // const response = await axios.post('http://3.108.219.46/search', {
-        console.log({ user_id: s_user_id, query: searchQuery, ip: ip, location: location })
-        const response = await axios.post(backend_url + '/search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
-        // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
-        setLoading(true);
-        setSearchPerformed(true)
-        // s
-        ReactGA.event({
-          category: 'User',
-          action: 'searched for ' + searchQuery
-        });
-        // console.log("session :", s_name, s_email, s_phone, s_location);
-        // console.log(response.data);
-        // console.log("---------------------------");
-        setResults(response.data[0]);
-        setOriginalResults(response.data[0]); // Store the original results
-        setkeywo(response.data[1]);
-        if (results) {
-          extractUniqueMonths(results);
-          extractUniqueYears(results);
-          extractUniqueCourts(results);
-          extractUniqueParties(results);
-          extractUniqueJudges(results);
-          extractUniqueDocumentTypes(results);
-          extractUniqueKeywords(results);
-
-        }
-
-      } catch (error) {
-        setResults(null);
-        setOriginalResults(null); // Reset original results
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-      }
-    }
-    if (searchCount < 2) {
-      
-      setLoading(true);
-      try {
-        // const response = await axios.post('http://3.108.219.46/search', {
-        console.log({ user_id: "9999999", query: searchQuery, ip: ip, location: location })
-        const response = await axios.post(backend_url + '/search', { user_id: "9999999", query: searchQuery, ip: ip, location: location });
-        // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
-        setLoading(true);
-        setSearchPerformed(true)
-        // s
-        ReactGA.event({
-          category: 'User',
-          action: 'searched for ' + searchQuery
-        });
-        // console.log("session :", s_name, s_email, s_phone, s_location);
-        // console.log(response.data);
-        // console.log("---------------------------");
-        setResults(response.data[0]);
-        setOriginalResults(response.data[0]); // Store the original results
-        setkeywo(response.data[1]);
-        if (results) {
-          extractUniqueMonths(results);
-          extractUniqueYears(results);
-          extractUniqueCourts(results);
-          extractUniqueParties(results);
-          extractUniqueJudges(results);
-          extractUniqueDocumentTypes(results);
-          extractUniqueKeywords(results);
-
-        }
-        // toast.warn(`Free Searches: ${2-searchCount + 1}`, { // Display a notification with the updated search count
-        //   position: "bottom-left",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "dark",
-        // });
-      } catch (error) {
-        setResults(null);
-        setOriginalResults(null); // Reset original results
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    }
+    const user = sessionStorage.getItem('user');
+    console.log("gmmasdans", user)
     handleClick()
-  };
+ 
+    if (searchCount > 2) {
+      if (user == null) {
+        console.log("search > 2 null user")
+        toast(`🚀 Please Signup for more free searches`, { // Display a notification with the updated search count
+          position: "top-center",
+          autoClose: 15000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          // transition: Bounce,
+        });
+        setModalShow(true)
+      }
+      else {
+        console.log("search > 2 not null user")
+        setLoading(true);
+        try {
+          // const response = await axios.post('http://3.108.219.46/search', {
+          console.log("querrrrr", { user_id: s_user_id, query: searchQuery, ip: ip, location: location })
+          const response = await axios.post(backend_url + '/search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
+          // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
+          setLoading(true);
+          setSearchPerformed(true)
+          // s
+          ReactGA.event({
+            category: 'User',
+            action: 'searched for ' + searchQuery
+          });
+          // console.log("session :", s_name, s_email, s_phone, s_location);
+          // console.log(response.data);
+          // console.log("---------------------------");
+          setResults(response.data[0]);
+          setOriginalResults(response.data[0]); // Store the original results
+          setkeywo(response.data[1]);
+          if (results) {
+            extractUniqueMonths(results);
+            extractUniqueYears(results);
+            extractUniqueCourts(results);
+            extractUniqueParties(results);
+            extractUniqueJudges(results);
+            extractUniqueDocumentTypes(results);
+            extractUniqueKeywords(results);
+
+          }
+
+        } catch (error) {
+          setResults(null);
+          setOriginalResults(null); // Reset original results
+          console.error("Error fetching data: ", error);
+        } finally {
+          setLoading(false); // Stop loading
+        }
+      }
+    }
+
+
+
+    if (searchCount < 2) {
+      if (!user) {
+        console.log("search < 2 null user")
+        setLoading(true);
+        try {
+          // const response = await axios.post('http://3.108.219.46/search', {
+          console.log({ user_id: "9999999", query: searchQuery, ip: ip, location: location })
+          const response = await axios.post(backend_url + '/search', { user_id: "9999999", query: searchQuery, ip: ip, location: location });
+          // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
+          setLoading(true);
+          setSearchPerformed(true)
+          // s
+          ReactGA.event({
+            category: 'User',
+            action: 'searched for ' + searchQuery
+          });
+          // console.log("session :", s_name, s_email, s_phone, s_location);
+          // console.log(response.data);
+          // console.log("---------------------------");
+          setResults(response.data[0]);
+          setOriginalResults(response.data[0]); // Store the original results
+          setkeywo(response.data[1]);
+          if (results) {
+            extractUniqueMonths(results);
+            extractUniqueYears(results);
+            extractUniqueCourts(results);
+            extractUniqueParties(results);
+            extractUniqueJudges(results);
+            extractUniqueDocumentTypes(results);
+            extractUniqueKeywords(results);
+
+          }
+          // toast.warn(`Free Searches: ${2-searchCount + 1}`, { // Display a notification with the updated search count
+          //   position: "bottom-left",
+          //   autoClose: 5000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "dark",
+          // });
+        } catch (error) {
+          setResults(null);
+          setOriginalResults(null); // Reset original results
+          console.error("Error fetching data: ", error);
+        } finally {
+          setLoading(false); // Stop loading
+        }
+      }
+      if (user) {
+        console.log("search < 2 not null user")
+        setLoading(true);
+        try {
+          // const response = await axios.post('http://3.108.219.46/search', {
+          console.log("querrrrr", { user_id: s_user_id, query: searchQuery, ip: ip, location: location })
+          const response = await axios.post(backend_url + '/search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
+          // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
+          setLoading(true);
+          setSearchPerformed(true)
+          // s
+          ReactGA.event({
+            category: 'User',
+            action: 'searched for ' + searchQuery
+          });
+          // console.log("session :", s_name, s_email, s_phone, s_location);
+          // console.log(response.data);
+          // console.log("---------------------------");
+          setResults(response.data[0]);
+          setOriginalResults(response.data[0]); // Store the original results
+          setkeywo(response.data[1]);
+          if (results) {
+            extractUniqueMonths(results);
+            extractUniqueYears(results);
+            extractUniqueCourts(results);
+            extractUniqueParties(results);
+            extractUniqueJudges(results);
+            extractUniqueDocumentTypes(results);
+            extractUniqueKeywords(results);
+
+          }
+
+        } catch (error) {
+          setResults(null);
+          setOriginalResults(null); // Reset original results
+          console.error("Error fetching data: ", error);
+        } finally {
+          setLoading(false); // Stop loading
+        }
+      }
+    }
+ };
 
   // const handleLoginSuccess = () => {
   //   // Reset the search count after successful login
@@ -1733,7 +1815,7 @@ function Search_content(//{
               </div>
 
               <div className="central-content">
-              
+
                 {!results && <center>
                   <div style={{ paddingTop: "140px" }}>
                     <Image src={imag} alt="My Image" style={{ width: '221px', height: '102p' }} />

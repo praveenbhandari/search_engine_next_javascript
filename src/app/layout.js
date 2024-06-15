@@ -9,6 +9,7 @@ import  FeedbackIcon  from './feedback.png';
 // const inter = Inter({ subsets: ["latin"] });
 import Image from "next/image";
 import { ResultsProvider } from "./resultContext";
+import { SessionProvider } from "next-auth/react";
 
 // export const metadata = {
 //   title: "Create Next App",
@@ -120,7 +121,9 @@ function RootLayout({ children }) {
     }, 2000); // Display message for 2 seconds
   };
 
-  return (<ResultsProvider>
+  return (
+    <SessionProvider session={children.session}>
+    <ResultsProvider>
     <html lang="en">
     
       <body >
@@ -167,6 +170,7 @@ function RootLayout({ children }) {
       </body>
     </html>
     </ResultsProvider>
+    </SessionProvider>
   );
 }
 export default RootLayout;
