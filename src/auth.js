@@ -12,10 +12,10 @@ export const {
 } = NextAuth({
     providers: [
         GoogleProvider({
-            // clientId: process.env.GOOGLE_CLIENT_ID,
-            // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            clientId:145538071302-qvsdq0v1cskb02o04u841ig5m0r5kfp2.apps.googleusercontent.com,
-            clientSecret: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,
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            // clientId:145538071302-qvsdq0v1cskb02o04u841ig5m0r5kfp2.apps.googleusercontent.com,
+            // clientSecret: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,
             authorization: {
                 params: {
                     prompt: "consent",
