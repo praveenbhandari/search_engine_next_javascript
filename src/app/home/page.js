@@ -1,7 +1,7 @@
 export default function page(){
     return(
         <main>
-            <h1>tetstasdhga</h1>
+            <h1>Human Rights Dossier</h1>
         </main>
     )
 }

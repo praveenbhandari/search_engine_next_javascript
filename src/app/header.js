@@ -267,11 +267,11 @@ const Header = () => {
 
 
                     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-gray-700 flex flex-wrap items-center text-base justify-between w-3/5">
-                    {(page !== "some" || results && results.length > 0) && (
+                    {/* {(page !== "some" || results && results.length > 0) && (
                             <Link href="/" legacyBehavior>
                                 <a className="relative" onClick={() => setPage("some")}>Home</a>
                             </Link>
-                        )}
+                        )} */}
                         <Link href="/about-us" legacyBehavior>
                             <a className="relative" onClick={() => setPage("about-us")}>About Us</a>
                         </Link>
@@ -313,7 +313,7 @@ const Header = () => {
                                                 onClick={logoutUser}
                                                 className=" px-2 py-1 flex items-center justify-between border rounded-b-lg bg-red-600 focus:outline-none hover:bg-red-700 text-white w-full"
                                                 //  style={{ padding: '0', borderRadius: '0 0 10px 10px' }}
-                                                href="/home"
+                                                href="/"
                                             >
                                                 Logout
                                                 <div >

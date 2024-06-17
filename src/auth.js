@@ -24,6 +24,15 @@ export const {
                 },
             },
         }),
+        LinkedInProvider({
+            clientId: process.env.LINKEDIN_CLIENT_ID,
+            clientSecret: process.env.LINKEDIN_CLIENT_SECRET
+          }),
+          AppleProvider({
+            clientId: process.env.APPLE_ID,
+            clientSecret: process.env.APPLE_SECRET
+          })
+
     ], 
     // callbacks: {
     //     async session({ session, token }) {

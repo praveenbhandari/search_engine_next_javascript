@@ -1840,7 +1840,7 @@ function Search_content(//{
                         {sortByDate && (
                           <div>
                             <button onClick={toggleSortDirection}>
-                              {sortDirection === "newer" ? "Newest to Oldest ⬇️" : "Oldest to Newest ⬆️"}
+                              {sortDirection === "newer" ? "Oldest to Newest ⬇️" : "Newest to Oldest ⬆️"}
                             </button>
                           </div>
                         )}
