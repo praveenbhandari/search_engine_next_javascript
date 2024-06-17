@@ -1,6 +1,9 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+
+console.log("keyyyyyy",process.env.GOOGLE_CLIENT_ID)
+console.log("keyyyy",process.env.GOOGLE_CLIENT_SECRET)
 export const {
     handlers: { GET, POST },
     auth,
@@ -9,8 +12,10 @@ export const {
 } = NextAuth({
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            // clientId: process.env.GOOGLE_CLIENT_ID,
+            // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientId:145538071302-qvsdq0v1cskb02o04u841ig5m0r5kfp2.apps.googleusercontent.com,
+            clientSecret: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,
             authorization: {
                 params: {
                     prompt: "consent",
