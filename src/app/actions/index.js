@@ -31,6 +31,7 @@ export async function doSocialLogin() {
     //   // console.log(location)
   
     // }, []);
+    console.log("in actions");
    const s= await signIn("google");
   //  setUser(s)
   const backend_url = "https://api.humanrightsdossier.com"
