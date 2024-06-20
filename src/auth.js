@@ -2,8 +2,8 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 
-console.log("keyyyyyy",process.env.GOOGLE_CLIENT_ID)
-console.log("keyyyy",process.env.GOOGLE_CLIENT_SECRET)
+// console.log("keyyyyyy",process.env.GOOGLE_CLIENT_ID)
+// console.log("keyyyy",process.env.GOOGLE_CLIENT_SECRET)
 export const {
     handlers: { GET, POST },
     auth,
@@ -24,14 +24,14 @@ export const {
                 },
             },
         }),
-        LinkedInProvider({
-            clientId: process.env.LINKEDIN_CLIENT_ID,
-            clientSecret: process.env.LINKEDIN_CLIENT_SECRET
-          }),
-          AppleProvider({
-            clientId: process.env.APPLE_ID,
-            clientSecret: process.env.APPLE_SECRET
-          })
+        // LinkedInProvider({
+        //     clientId: process.env.LINKEDIN_CLIENT_ID,
+        //     clientSecret: process.env.LINKEDIN_CLIENT_SECRET
+        //   }),
+        //   AppleProvider({
+        //     clientId: process.env.APPLE_ID,
+        //     clientSecret: process.env.APPLE_SECRET
+        //   })
 
     ], 
     // callbacks: {
