@@ -1475,7 +1475,7 @@ function Search_content(//{
       extractUniqueKeywords(results);
     }
   }, [
-    // results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
+     results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
 
   ]);
 
