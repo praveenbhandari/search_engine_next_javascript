@@ -298,7 +298,7 @@ function Search_content(//{
               </div>
             )}
 
-            {/* 
+             
           {metadata.Keywords && Array.isArray(metadata.Keywords) && metadata.Keywords.length > 0 && (
             <div className="keywords-container">
               {metadata.Keywords.map((keyword, index) => (
@@ -317,7 +317,7 @@ function Search_content(//{
 
           <button onClick={() => setModalOpen(true)} className="view-document">
             View Summary
-          </button> */}
+          </button> 
             {isModalOpen && (
               <DocumentModal
                 content={
