@@ -35,6 +35,7 @@ export async function doSocialLogin() {
    const s= await signIn("google");
   //  setUser(s)
   const backend_url = "https://api.humanrightsdossier.com"
+  // const backend_url = "http://127.0.0.1:8000"
   console.log("innn ",s)
   
 
