@@ -1171,7 +1171,7 @@ function Search_content(//{
         try {
           // const response = await axios.post('http://3.108.219.46/search', {
           console.log("querrrrr", { user_id: s_user_id, query: searchQuery, ip: ip, location: location })
-          const response = await axios.post(backend_url + '/search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
+          const response = await axios.post(backend_url + '/dev_search', { user_id: s_user_id, query: searchQuery, ip: ip, location: location });
           // const quer = await axios.post(backend_url+'/add_query', {query: searchQuery, ip:ipp});
           setLoading(true);
           setSearchPerformed(true)
