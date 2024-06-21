@@ -298,7 +298,7 @@ function Search_content(//{
               </div>
             )}
 
-            {/* 
+             
           {metadata.Keywords && Array.isArray(metadata.Keywords) && metadata.Keywords.length > 0 && (
             <div className="keywords-container">
               {metadata.Keywords.map((keyword, index) => (
@@ -317,7 +317,7 @@ function Search_content(//{
 
           <button onClick={() => setModalOpen(true)} className="view-document">
             View Summary
-          </button> */}
+          </button> 
             {isModalOpen && (
               <DocumentModal
                 content={
@@ -1382,7 +1382,7 @@ function Search_content(//{
   //   }
   // }, [searchQuery, debouncedFetchSuggestions]);
 
-  const extractUniqueMonths = (results) => {
+  const extractUniqueMonths = useCallback((results) => {
     const months = new Set();
     results.forEach((item) => {
       let dateString = item[1].metadata["Date"]; // Initialize dateString with metadata["Date"]
@@ -1397,9 +1397,9 @@ function Search_content(//{
     });
     // console.log(months)
     setUniqueMonths([...months]);
-  };
+  },[]);
 
-  const extractUniqueYears = (results) => {
+  const extractUniqueYears = useCallback((results) => {
     const years = new Set(results.map((item) => {
       const date = new Date(item[1].metadata.Date);
       return date.getFullYear();
@@ -1409,33 +1409,33 @@ function Search_content(//{
 
     // console.log(years)
     setUniqueYears([...years]);
-  };
+  }, []);
 
-  const extractUniqueCourts = () => {
+  const extractUniqueCourts = useCallback((results) => {
     const courts = new Set(results.map((item) => item[1].metadata["Court Name"])
       .filter(court => court !== "")
     );
 
     // console.log(courts)
     setUniqueCourts([...courts]);
-  };
+  }, []);
 
-  const extractUniqueParties = () => {
+  const extractUniqueParties = useCallback((results) => {
     const parties = new Set(results.flatMap((item) => item[1].metadata["Parties Involved"] || [])
       .filter(party => party !== "")
     );
 
     // console.log(parties)
     setUniqueParties(Array.from(parties));
-  };
+  }, []);
 
 
-  const extractUniqueJudges = () => {
+  const extractUniqueJudges = useCallback((results) => {
     const judges = new Set(results.map((item) => item[1].metadata["Judges"]).flat());
 
     // console.log(judges)
     setUniqueJudges(Array.from(judges));
-  };
+  }, []);
 
   // Fetch unique document types
   // const extractUniqueDocumentTypes = () => {
@@ -1444,24 +1444,24 @@ function Search_content(//{
   //     .flatMap(item => item[1].metadata["Document Type"])
   //     .filter(type => typeof type === 'string' && type.trim() !== "")
   //   );
-  const extractUniqueDocumentTypes = () => {
+  const extractUniqueDocumentTypes = useCallback((results) => {
     const documentTypes = new Set(results.flatMap(item => item[1].metadata["Document Type"] || [])
       .filter(type => type !== "")
     );
 
     console.log(documentTypes)
     setUniqueDocumentTypes(Array.from(documentTypes)); // Convert Set to Array
-  };
+  }, []);
 
   // Fetch unique keywords
-  const extractUniqueKeywords = () => {
+  const extractUniqueKeywords = useCallback((results) => {
     const keywords = new Set(results.flatMap((item) => item[1].metadata.Keywords || [])
       .filter(keyword => keyword !== "")
     );
 
     console.log(keywords)
     setUniqueKeywords(Array.from(keywords)); // Convert Set to Array
-  };
+  }, []);
 
   useEffect(() => {
     // console.log(results);
@@ -1474,6 +1474,8 @@ function Search_content(//{
       extractUniqueDocumentTypes(results);
       extractUniqueKeywords(results);
     }
+
+
   }, [
     results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
 
