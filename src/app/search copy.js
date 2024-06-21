@@ -16,7 +16,7 @@ import { FocusOn } from 'react-focus-on';
 // import TermsnCondition from "./terms";
 // import PrivacyPolicy from "./privacy";
 // import Pricing from "./Pricing";
-// import Lottie from "lottie-react";
+import Lottie from "lottie-react";
 import { ResultsContext } from "./resultContext";
 import Image from 'next/image'
 // import nopage from "./lottie/nopg.json";

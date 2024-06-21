@@ -1474,11 +1474,12 @@ function Search_content(//{
       extractUniqueDocumentTypes(results);
       extractUniqueKeywords(results);
     }
-  }, 
-            [
-     results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
-              ]
-              );
+
+
+  }, [
+    results,extractUniqueCourts,extractUniqueDocumentTypes,extractUniqueJudges,extractUniqueKeywords,extractUniqueMonths,extractUniqueParties,extractUniqueYears
+
+  ]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
